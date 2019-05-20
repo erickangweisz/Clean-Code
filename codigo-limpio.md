@@ -713,3 +713,12 @@ __La solución al problema__ (véase el __listado 3.5__) __consiste en ocultar l
 ```
 
 __Mi regla general para las instrucciones `switch` es que se pueden tolerar si solo aparecen una vez, se usan para crear objetos polimórficos y se ocultan tras una relación de herencia para que el resto del sistema no las pueda ver__ <span style="color: Maroon">[G23]</span>. Evidentemente, cada caso es diferente y en ocasiones se puede incumplir una o varias partes de esta regla.
+
+### Usar nombres descriptivos
+
+En el __listado 3.7__, hemos cambiado el nombre de la función de ejemplo de `testableHtml` a `SetupTeardownIncluder.render`. Es un nombre más apropiado ya que describe mejor el cometido de la función. También hemos asignado a los métodos privados un nombre descriptivo como `isTestable` o `includeSetupAndTeardownPages`. __No hay que olvidar el valor de los nombres correctos__. Recuerde el principio de Ward: 
+>"Sabemos que trabajamos con código limpio cuando cada rutina es más o menos lo que esperábamos".
+
+__<span style="color: darkred">Para alcanzar este principio, gran parte de esfuerzo se basa en seleccionar nombres adecuados para pequeñas funciones que hcen una cosa. Cuanto más reducida y concreta sea una función, más sencillo será elegir un nombre descriptivo</span>. No tema los nombres extensos. Un nombre descriptivo extenso es mucho mejor que uno breve pero enigmático. Use una convención de nombres que permita leer varias palabras en los nombres de las funciones y use esas palabras para asignar a la función un nombre que describa su cometido.
+No tema dedicar tiempo a elegir un buen nombre. De hecho, debería probar con varios nombres y leer el código con todos ellos.
+La elección de nombres descriptivos clarifica el diseño de los módulos y le permite mejorarlos. No es extraño que la búsqueda de nombres adecuados genere una reestructuración favorable del código. Sea coherente con los nombres. Use las mismas frases, sustantivos y verbos en los nombres de función que elija para los módulos__.

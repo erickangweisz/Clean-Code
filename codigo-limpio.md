@@ -645,15 +645,71 @@ Para que las funciones realicen "una cosa", __asegúrese de que las instruccione
 ### Leer código de arriba a abajo: la regla descendente
 
 El objetivo es que el código se lea como un texto de arriba a abajo. __Queremos que tras todas las funciones aparezcan las del siguiente nivel de abstracción para poder leer el programa, descendiendo un nivel de abstracción por vez mientras leemos la lista de funciones__. Es lo que denomino la regla descendente.
-Para decirlo de otra forma, queremos leer el programa como si fuera un conjunto de párrafos `TO`, en el que cada uno describe el nivel actual de abstracción y hace referencia a los párrafos `TO` posteriores en el siguiente nivel.
-
-> Para incluir configuraciones y detalles, incluimos configuraciones, después del contenido de la página de prueba, y por último los detalles.
-
-> Para incluir las configuraciones, incluimos la configuración de suite si se trata de una suite, y después la configuración convencional.
-
-> Para incluir la configuración de suite, buscamos la jerarquía principal de la página `SuiteSetUp` y añadimos una instrucción `include` con la ruta de dicha página.
-
-> Para buscar la jerarquía principal...
 
 A los programadores les resulta complicado aprender esta regla y crear funciones en un único nivel de abstracción, pero un truco importante. __Es la clave para reducir la longitud de las funciones y garantizar que solo hagan una cosa__. Al conseguir que el código se lea de arriba a abajo, se mantiene la coherencia de los niveles de abstracción.
 Fíjese en el __listado 3.7.__ del final del capítulo. Muestra la función `testableHtml` modificada de acuerdo a estos principios. Cada función presenta a la siguiente y se mantiene en un nivel de abstracción coherente.
+
+### Instrucciones Switch
+
+Es complicado usar una instrucción `switch` de tamaño reducido. Aunque solo tenga dos casos, es mayor de lo que un bloque o función debería ser. También es complicado crear una instrucción `switch` que haga una sola cosa. Por su naturaleza, las instrucciones `switch` siempre hacen N cosas. Desafortunadamente, __no siempre podemos evitar las instrucciones `switch` pero podemos asegurarnos de incluirlas en una clase de nivel inferior y de no repetirlas__. Para ello __recurrimos al polimorfismo__. Fíjese en el __listado 3.4.__ Muestra una de las operaciones que pueden depender del tipo de empleado.
+
+> __Listado 3.4.__ Payroll.java
+
+```java
+    public Money calculatePay(Employee e) 
+    throws InvalidEmployeeType {
+        switch (e.type) {
+            case COMMISSIONED:
+                return calculateCommisionedPay(e);
+            case HOURLY:
+                return calculateHourlyPay(e);
+            case SALARIED:
+                return calculateSalariedPay(e);
+            default:
+                throw new InvalidEmployeeType(e.type);
+        }
+    }
+```
+
+Esta función tiene varios problemas. Por un lado, es de gran tamaño y cuando se añadan nuevos tipos de empleado, aumentará más. Por otra parte, hace más de una cosa.
+También incumple el Principio de responsabilidad única (Single Responsability Principle o SRP) ya que hay más de un motivo para cambiarla. Además, incumple el Principio abierto/cerrado (Open Closed Principle u OCP), ya que debe cambiar cuando se añadan nuevos tipos, pero posiblemente el peor de los problemas es que hay un número ilimitado de funciones que tienen la misma estructura.
+Por ejemplo, podríamos tener:
+
+```java
+    isPayday(Employee e, Date date),
+```
+ó
+```java
+    deliverPay(Employee e, Money pay),
+```
+o muchas otras, todas con la misma estructura.
+
+__La solución al problema__ (véase el __listado 3.5__) __consiste en ocultar la instrucción `switch` en una factoría abstracta e impedir que nadie la vea__. La factoría usa la instrucción `switch` para crear las instancias adecuadas a los derivados de `Employee` y las distintas funciones, como `calculatePay`, `isPayday` y `deliverPay`, se entregarán de forma polifórmica a través de la interfaz `Employee`.
+
+> __Listado 3.5.__ Employee y Factory
+```java
+    public abstract class Employee {
+        public abstract boolean isPayday();
+        public abstract Money calculatePay();
+        public abstract void deliverPay(Money pay);
+    }
+    ----------------
+    public interface EmployeeFactory {
+        public Employee makeEmployee(EmployeeRecord r) throws InvalidEmployeeType;
+    }
+    ----------------
+    public class EmployeeFactoryImpl implements EmployeeFactory {
+        public Employee makeEmployee(EmployeeRecord r) throws InvalidEmployeeType {
+            switch (r.type) {
+                case COMMISSIONED:
+                    return new CommissionedEmployee(r);
+                case HOURLY:
+                    return new HourlyEmployee(r);
+                default:
+                    throw new InvalidEmployeeType(r.type);
+            }
+        }
+    }
+```
+
+__Mi regla general para las instrucciones `switch` es que se pueden tolerar si solo aparecen una vez, se usan para crear objetos polimórficos y se ocultan tras una relación de herencia para que el resto del sistema no las pueda ver__ <span style="color: Maroon">[G23]</span>. Evidentemente, cada caso es diferente y en ocasiones se puede incumplir una o varias partes de esta regla.

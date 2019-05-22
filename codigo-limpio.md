@@ -788,3 +788,31 @@ __Así pues, se aplican las mismas reglas. Las funciones que aceptan argumentos 
 La selección de nombres correctos para una función mejora la explicación de su cometido así como el orden y el cometido de los argumentos. __En formato monádico, la función y el argumento deben formar un par de verbo y sustantivo__. Por ejemplo, `write(name)` resulta muy evocador. Sea lo que sea `name`, sin duda se escribe (`write`).
 Un nombre más acertado podría ser `writeField(name)`, que nos dice que `name` es un campo (`field`). Este es un ejemplo de palabra clave como nombre de función. Con este formato codificamos los nombres de los argumentos en el nombre de esa función. Por ejemplo, `assertEquals` se podría haber escrito como `assertExpectedEqualsActual(expected, actual)`, lo que mitiga el problema de tener que recordar el orden de los argumentos.
 
+### Sin efectos secundarios
+
+Los efectos secundarios son mentiras. Sun función promete hacer una cosa, pero también hace otras cosas ocultas. En ocasiones realiza cambios inesperados en las variables de su propia clase. En ocasiones las convierte en las variables pasadas a la función o a elementos globales del sistema. En cualquier caso, se comete un engaño que suele provocar extrañas combinaciones temporales y dependencias de orden.
+
+Fíjese en la función del __listado 3.6__, aparentemente inofensiva. Una un algoritmo estándar para comparar `userName` con `password`. Devuelve `true` si coinciden y `false` si hay algún problema, pero también hay un efect secundario. ¿Lo detecta?
+
+> __Listado 3.6.__ UserValidator.java.
+```java
+    public class UserValidator {
+        private Cryptographer cryptographer;
+
+        public boolean checkPassword(String userName, String password) {
+            User user = UserGateway.findByName(userName);
+            if (user != User.NULL) {
+                String codedPhrase = user.getPhraseEncodedByPassword();
+                String phrase = cryptographer.decrypt(codedPhrase, password);
+                if ("Valid password".equals(phrase)) {
+                    Session.initialize();
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+```
+
+El efecto secundario es la invocación de `Session.initialize()`. La función `checkPassword`, por su nombre, afirma comprobar la contraseña. __El nombre no implica que inicialice la sesión__. Por tanto, un invocador que se crea lo que dice el nombre de la función se arriesga a borrar los datos de sesión actuales cuando dedica comprobar la validez del usuario. Este efecto secundario genera una combinación temporal. Es decir, solo se puede invocar `checkPassword` en determinados momentos (cuando se pueda inicializar la sesión). Si no se invoca en orden, se pueden perder los datos de la sesión. Las combinaciones temporales son confusas, en especial cuando se ocultan como efecto secundario. __Si tiene que realizar una combinación temporal, hágalo de forma clara en el nombre de la función.__ En este caso, podríamos cambiar el nombre de la función por `checkPasswordAndInitializeSession`, pero incumpliría la norma de hacer una sola cosa.
+

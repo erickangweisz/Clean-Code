@@ -754,3 +754,14 @@ Por ejemplo, fíjese en la sobrecarga de `assertEquals` que acepta tres argument
 
 Por otra parte, hay otra triada que no es tan negativa: `assertEquals(1.0, amount, .001)`. Aunque también exija doble atención, merece la pena. Conviene recordar siempre que la igualdad de los valores de coma flotante es algo relativo.
 
+### Objeto de argumento
+
+Cuando una función parece necesitar dos o más argumentos, es probable que alguno de ellos se incluya en una clase propia. Fíjese en la diferencia entre las dos siguientes declaraciones:
+
+```java
+    Circle makeCircle(double x, double y, double radius);
+    Circle makeCircle(Point center, double radius);
+```
+
+__La reducción del número de argumentos mediante la creación de objetos puede parecer una trampa pero no lo es. Cuando se pasan grupos de variables de forma conjunta__, como `x` e `y` en el ejemplo anterior, __es probable que formen parte de un concepto que se merece un nombre propio__.
+

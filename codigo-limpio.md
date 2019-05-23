@@ -831,3 +831,24 @@ __Todo lo que le obligue a comprobar la firma de la función es un esfuerzo dobl
 Antes de la programación orientada a objetos, era necesario tener argumentos de salida. Sin embargo, gran parte de su necesidad desaparece en los lenguajes orientados a objetos, pensados para actuar como argumento de salida. Es decir, sería más indicado invocar `appendFooter` como `report.appendFooter();`.
 __Por lo general, los argumentos de salida deben evitarse__. Si su función tiene que cambiar el estado de un elemento, haga que cambie el estado de su objeto contenedor.
 
+### Separación de consultas de comando
+
+__Las funciones deben hacer algo o responder a algo, pero no ambas cosas. Su función debe cambiar el stado de unobjeto o devolver información sobre el mismo, pero ambas operaciones causan confusión__. Fíjese en la siguiente función:
+
+`public boolea set(String attribute, String value);`
+
+Esta función establece el valor de un tributo y devuelve `true` en caso de éxito o `false` si el atributo no existe. Esto provica la presencia de una extraña instrucción como la siguiente:
+
+`ìf (set("username", "unclebob"))...`
+
+Imagínelo desde el punto de vista del lector: ¿Qué signfica? ¿Pregunta si el atributo "username" se ha establecido correctamente en "unclebob"? Es complicado saberlo por la invocación ya que no es evidente si `set` es un verbo o un adjetivo.
+
+El autor pretendía que `set` fuera un verbo, pero el contexto de la instrucción `if` parece un adjetivo. La instrucción se lee como "si el atributo `username` se ha establecido previamente en `unclebob`", no como "establecer el atributo `username` en `unclebob` y si funciona, entonces...". Podríamos solucionarlo si cambiamos el nombre de la función `set` por `setAndCheckIfExists`, pero no mejoraría la legibilidad de la instrucción `if`. __La verdadera solución es separar el comando de la consulta para evitar la ambigüedad__.
+
+```java
+    if (attributeExists("username")) {
+        setAttribute("username", "unclebob");
+        ...
+    }
+```
+

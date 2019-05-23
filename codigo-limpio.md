@@ -816,3 +816,18 @@ Fíjese en la función del __listado 3.6__, aparentemente inofensiva. Una un alg
 
 El efecto secundario es la invocación de `Session.initialize()`. La función `checkPassword`, por su nombre, afirma comprobar la contraseña. __El nombre no implica que inicialice la sesión__. Por tanto, un invocador que se crea lo que dice el nombre de la función se arriesga a borrar los datos de sesión actuales cuando dedica comprobar la validez del usuario. Este efecto secundario genera una combinación temporal. Es decir, solo se puede invocar `checkPassword` en determinados momentos (cuando se pueda inicializar la sesión). Si no se invoca en orden, se pueden perder los datos de la sesión. Las combinaciones temporales son confusas, en especial cuando se ocultan como efecto secundario. __Si tiene que realizar una combinación temporal, hágalo de forma clara en el nombre de la función.__ En este caso, podríamos cambiar el nombre de la función por `checkPasswordAndInitializeSession`, pero incumpliría la norma de hacer una sola cosa.
 
+### Argumentos de salida
+
+__Los argumentos suelen interpretarse como entradas de una función__. Si lleva varios años programando, estoy seguro que habrá visto un argumento que en vez de ser de entrada era de salida. Por ejemplo:
+
+`appendFooter(s)`
+
+¿Está función añade `s` al final de algo? ¿O añade el final de algo a `s`? ¿`s` es una entrada o una salida? Lo sabemos al ver la firma de la función.
+
+`public void appendFooter(StringBuffer report)`
+
+Esto lo aclara todo pero para ello hay que comprobar la declaración de la función.
+__Todo lo que le obligue a comprobar la firma de la función es un esfuerzo doble. Es una pausa cognitiva y debe evitarse__.
+Antes de la programación orientada a objetos, era necesario tener argumentos de salida. Sin embargo, gran parte de su necesidad desaparece en los lenguajes orientados a objetos, pensados para actuar como argumento de salida. Es decir, sería más indicado invocar `appendFooter` como `report.appendFooter();`.
+__Por lo general, los argumentos de salida deben evitarse__. Si su función tiene que cambiar el estado de un elemento, haga que cambie el estado de su objeto contenedor.
+

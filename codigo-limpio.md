@@ -852,3 +852,40 @@ El autor pretendía que `set` fuera un verbo, pero el contexto de la instrucció
     }
 ```
 
+### Mejor excepciones que devolver códigos de error
+
+__Devolver códigos de error de funciones de comando es un sutil incumplimiento de la separación de comandos de consulta__. Hace que los comandos usados asciendan a expresiones en los predicados de las instrucciones `if`.
+
+`if (deletePage(page) == E_KO)`
+
+No padece la confusión entre verbo y adjetivo, pero genera estructuras anidadas. Al devolver un código de error se crea un problema: el invocador debe procesar el error de forma inmediata.
+
+```java
+    if (deletePage(page) == E_OK) {
+        if (registry.deleteReference(page.name) == E_OK) {
+            if (configKeys.deleteKey(page.name.makeKey()) == E_OK) {
+                loger.log("page deleted");
+            } else {
+                logger.log("configKey not deleted");
+            }
+        } else {
+            logger.log("deleteReference from registry failed");
+        }
+    } else {
+        logger.log("delete failed");
+        return E_ERROR;
+    }
+```
+
+Por otra parte, si usa excepciones en lugar de códigos de error, el código de procesamiento del error se puede separar del código de ruta y se puede simplificar:
+
+```java
+    try {
+        deletePage(page);
+        registry.deleteReference(page.name);
+        configKeys.deleteKey(page.name.makeKey());
+    } catch (Exception e) {
+        logger.log(e.getMessage());
+    }
+```
+

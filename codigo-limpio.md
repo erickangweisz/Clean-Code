@@ -889,3 +889,29 @@ Por otra parte, si usa excepciones en lugar de códigos de error, el código de 
     }
 ```
 
+### Extraer bloques Try/Catch
+
+__Los bloques `try/catch` no son atractivos por naturaleza. Confunden la estructura del código y mezclan el procesamiento de errores con el normal. Por ello, conviene extraer el cuerpo de los bloques `try` y `catch` en funciones individuales__.
+
+```java
+    public void delete(Page page) {
+        try {
+            deletePageAndAllReferences(page);
+        } catch (Exception e) {
+            logError(e);
+        }
+    }
+
+    private void deletePageAndAllReferences(Page page) throws Exception {
+        deletePage(page);
+        registry.deleteReference(page.name);
+        configKeys.deleteKey(page.name.makeKey());
+    }
+
+    private void logError(Exception e) {
+        logger.log(e.getMessage());
+    }
+```
+
+En este caso, la función `delete` es de procesamiento de errores. Es fácil de entender e ignorar. La función `deletePageAndAllReferences` es para los procesos de borrar una página. El procesamiento de errores de puede ignorar. __De este modo, la separación facilita la compresión y la modificación del código__.
+

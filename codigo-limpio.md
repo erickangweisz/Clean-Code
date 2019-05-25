@@ -915,3 +915,7 @@ __Los bloques `try/catch` no son atractivos por naturaleza. Confunden la estruct
 
 En este caso, la función `delete` es de procesamiento de errores. Es fácil de entender e ignorar. La función `deletePageAndAllReferences` es para los procesos de borrar una página. El procesamiento de errores de puede ignorar. __De este modo, la separación facilita la compresión y la modificación del código__.
 
+### El procesamiento de errores es una cosa
+
+__Las funciones solo deben hacer una cosa y el procesamiento de errores es un ejemplo. Por tanto, una función que procese errores no debe hacer nada más__. Esto implica (como en el ejemplo anterior) que si una función incluye la palabra clave `try`, debe ser la primera de la función y que no debe haber nada más después de los bloques `catch/finally`.
+

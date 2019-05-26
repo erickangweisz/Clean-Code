@@ -943,3 +943,11 @@ Fíjese de nuevo en el __listado 3.1__; verá que hay un algoritmo que se repite
 Esta duplicación se remedia gracias al método `include` del __listado 3.7.__ Vuelva a leer el código y fíjese en cómo se ha mejorado la legibilidad del código reduciendo la duplicación.
 __La duplicación puede ser la raíz de todos los problemas del software. Existen numerosos principios y prácticas para controlarla o eliminarla__. Imagine que todas las formas normales de la base de datos de Codd sirviera para eliminar la duplicación de datos. Imagine también cómo la programación orientada a objetos concentra el código en clases base que en otros casos serian redundantes. __La programación estructurada, la programación orientada a aspecto y la orientada a componentes son, en parte, estrategias para eliminar duplicados__. Parece que desde la aparición de las subrutinas, las innovaciones en desarrollo de software han sido un intento continuado por eliminar la duplicación de nuestro código fuente.
 
+### Programación estructurada
+
+Algunos programadores siguien las reglas de programación estructurada de Edsger Dijkstra.
+<img align="right" src="pictures/dijkstra_edgar.jpg" alt="drawing" width="150"/>
+__Dijkstra afirma que todas las funciones y todos los bloques de una función deben tener una entrada y una salida__. Estas reglas implican que solo debe haber una instrucción `return` en una función, que no debe haber instrucciones `break` o `continue` en un bucle y nunca, bajo ningún concepto, debe haber instrucciones `goto`.
+__Aunque apreciemos los objetivos y disciplinas de la programación estructurada, no sirven de mucho cuando las funciones son de reducido tamaño. Su verdadero beneficio se aprecia en funciones de gran tamaño__.
+Por tanto, si sus funciones son de tamaño reducido, una instrucción `return`, `break`, o `continue` no hará daño alguno y en ocasiones puede resultar más expresiva que la regla de una entrada y una salida. Por otra parte, `goto` solo tiene sentido en funciones de gran tamaño y debe evitarse.
+

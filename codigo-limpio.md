@@ -959,3 +959,9 @@ __Cuando creo funciones, suelen ser extensas y complicadas, con abundancia de sa
 __Por tanto, retoco el código, divido las funciones, cambio los nombres y elimino los duplicados.__ __Reduzco los métodos y los reordeno. En ocasiones, elimino clases enteras, mientras mantengo las pruebas__.
 __Al final, consigo funciones que cumplen las reglas detalladas en este capítulo. No las escribo al comenzar y dudo que nadie pueda hacerlo__.
 
+### Conclusión
+
+Todo sistema se crea a partir de un lenguaje específico del dominio diseñado por los programadores para describir dicho sistema. Las funciones son los verbos del lenguaje y las clases los sustantivos. No es volver a la noción de que los sustantivos y verbos de un documento de requisitos son las clases y funciones de un sistema. Es una verdad mucho más antigua. __El arte de la programación es, y ha sido siempre, el arte del diseño del lenguaje__.
+Los programadores experimentados piensan en los sistemas como en historias que contar, no como en programas que escribir. Recurren a las prestaciones del lenguaje de programación selecccionado para crear un lenguaje expresivo mejor y más completo que poder usar para contar esa historia. Recurren a las prestaciones del lenguaje de programación seleccionado para crear un lenguaje expresivo mejor y más completo que poder usar para contar esa historia. Parte de ese lenguaje es la jerarquía de funciones que describen las acciones que se pueden realizar en el sistema. Dichas acciones se crean para usar el lenguaje de dominio concreto que definen para contar su pequeña parte de la historia.
+__En este capítulo hemos visto la mecánica de la creación de funciones correctas. si aplica estas reglas, sus funciones serán breves, con nombres correctos, y bien organizadas, pero no olvide que su verdadero objetivo es contar la historia del sistema y que las funciones que escriba deben encajar en un lenguaje claro y preciso que le sirva para contar esa historia__.
+

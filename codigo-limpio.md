@@ -919,3 +919,27 @@ En este caso, la función `delete` es de procesamiento de errores. Es fácil de 
 
 __Las funciones solo deben hacer una cosa y el procesamiento de errores es un ejemplo. Por tanto, una función que procese errores no debe hacer nada más__. Esto implica (como en el ejemplo anterior) que si una función incluye la palabra clave `try`, debe ser la primera de la función y que no debe haber nada más después de los bloques `catch/finally`.
 
+### El imán de dependencias Error.java
+
+La devolución de códigos de error suele implicar que existe una clase o enumeración en la que se definen los códigos de error.
+
+```java
+    public enum Error {
+        OK,
+        INVALID,
+        NO_SUCH,
+        LOCKER,
+        OUT_OF_RESOURCES,
+        WAITING_FOR_EVENT;
+    }
+```
+
+Clases como ésta son un imán para las dependencias; otras muchas clases deben importarlas y usarlas. Por ello, cuando cambia la enumeración `Error`, es necesario volver a compilar e implementar dichas clases. Esto añade presión a la clase `Error`. Los programadores no quieren añadir nuevos errores porque tendrán que volver a generar e implementarlo todo. Por ello, reutilizan códigos de error antiguos en lugar de añadir otros nuevos.
+Al usar excepciones en lugar de códigos de error, las nuevas excepciones son derivaciones de la clase de la excepción. Se pueden añadir sin necesidad de volver a compilar o implementar.
+
+### No repetirse
+
+Fíjese de nuevo en el __listado 3.1__; verá que hay un algoritmo que se repite cuatro veces, en los casos `SetUp`, `SuiteSetUp`, `TearDown` y `SuiteTearDown`. No es fácil detectar esta repetición ya que las cuatro instancias se mezclan con otro código, pero la duplicación es un problema que aumenta el tamaño del código y requerirá una modificación cuádruple si alguna vez cambia el algoritmo. También se cuatriplica el riesgo de errores.
+Esta duplicación se remedia gracias al método `include` del __listado 3.7.__ Vuelva a leer el código y fíjese en cómo se ha mejorado la legibilidad del código reduciendo la duplicación.
+__La duplicación puede ser la raíz de todos los problemas del software. Existen numerosos principios y prácticas para controlarla o eliminarla__. Imagine que todas las formas normales de la base de datos de Codd sirviera para eliminar la duplicación de datos. Imagine también cómo la programación orientada a objetos concentra el código en clases base que en otros casos serian redundantes. __La programación estructurada, la programación orientada a aspecto y la orientada a componentes son, en parte, estrategias para eliminar duplicados__. Parece que desde la aparición de las subrutinas, las innovaciones en desarrollo de software han sido un intento continuado por eliminar la duplicación de nuestro código fuente.
+

@@ -951,3 +951,11 @@ __Dijkstra afirma que todas las funciones y todos los bloques de una función de
 __Aunque apreciemos los objetivos y disciplinas de la programación estructurada, no sirven de mucho cuando las funciones son de reducido tamaño. Su verdadero beneficio se aprecia en funciones de gran tamaño__.
 Por tanto, si sus funciones son de tamaño reducido, una instrucción `return`, `break`, o `continue` no hará daño alguno y en ocasiones puede resultar más expresiva que la regla de una entrada y una salida. Por otra parte, `goto` solo tiene sentido en funciones de gran tamaño y debe evitarse.
 
+### Cómo crear este tipo de funciones
+
+__La creación de software es como cualquier otro proceso creativo. Al escribir un informe o un artículo, primero se estructuran las ideas y después el mensaje hasta que se lea bien__.
+__El primer borrador puede estar desorganizado, de modo que lo retoca y mejora hasta que se lea de la forma adecuada__.
+__Cuando creo funciones, suelen ser extensas y complicadas, con abundancia de sangrados y bucles anidados. Con extensas listas de argumentos, nombres arbitrarios y código duplicado, pero también cuento con una serie de pruebas de unidad que abarcan todas y cada una de las líneas de código.__
+__Por tanto, retoco el código, divido las funciones, cambio los nombres y elimino los duplicados.__ __Reduzco los métodos y los reordeno. En ocasiones, elimino clases enteras, mientras mantengo las pruebas__.
+__Al final, consigo funciones que cumplen las reglas detalladas en este capítulo. No las escribo al comenzar y dudo que nadie pueda hacerlo__.
+

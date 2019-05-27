@@ -1112,3 +1112,21 @@ __Una de las principales motivaciones para crear comentarios es el código incor
 __Creamos un módulo y sabemos que es confuso y está desorganizado. Sabemos que es un desastre y entonces decidimos comentarlo. Error. Mejor límpielo.__
 El código claro y expresivo sin apenas comentarios es muy superior al código enrevesado y complejo con multitud de comentarios. En lugar de perder tiempo escribiendo comentarios que expliquen el desastre cometido, dedíquelo a solucionarlo.
 
+### Expliquese en el código
+
+__En ocasiones, el código es un pobre vehículo de expresión. Desafortunadamente, muchos programadores lo entienden como que el código no es un buen medio de expresión. Esto es falso. ¿Qué prefiere ver?__ Esto:
+
+```java
+    // Comprobar si el empleado tiene derecho a todos los beneficios
+    if ((employee.flags & HOURLY_FLAG) &&
+        (employee.age > 65))
+```
+
+o esto otro:
+
+```java
+    if (employee.isEligibleForFullBenefits())
+```
+
+Apenas se tardan unos segundos en explicar nuestras intenciones en el código. __En muchos casos, basta con crear una función que diga lo mismo que el comentario que pensaba escribir__.
+

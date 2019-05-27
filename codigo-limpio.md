@@ -1170,7 +1170,7 @@ __Hubiera resultado mejor y más claro si el código se hubiera cambiado a una c
 
 ### Explicar la intención
 
-En ocasiones, un comentario es algo más que información útil sobre la implementación y proporciona la intención de una decisión. En el siguiente caso, vemos una interesante decisión documentada por un comentario. Al comparar dos objetos, el autor decidió ordenar los objetos de su clase por encima de los objetos de otra.
+__En ocasiones, un comentario es algo más que información útil sobre la implementación y proporciona la intención de una decisión__. En el siguiente caso, vemos una interesante decisión documentada por un comentario. Al comparar dos objetos, el autor decidió ordenar los objetos de su clase por encima de los objetos de otra.
 
 ```java
     public int compareTo(Object o) {
@@ -1207,4 +1207,31 @@ Veamos otro ejemplo mejor. Puede que no esté de acuerdo con la solución del pr
         assertEquals(false, failFlag.get());
     }
 ```
+
+### Clarificación
+
+__En ocasiones, basta con traducir el significado de un argumento o valor devuelto en algo más legible__. Por lo general, conviene buscar la forma de que el argumento o el valor devuelto sean claros por sí mismos; pero cuando forma parte de una biblioteca estándar o de código que no se pueda alterar, un comentario aclarativo puede ser muy útil.
+
+```java
+    public void testCompareTo() throws Exception {
+        WikiPagePath a = PathParser.parse("PageA");
+        WikiPagePath ab = PathParser.parse("PageA.PageB");
+        WikiPagePath b = PathParser.parse("PageB");
+        WikiPagePath aa = PathParser.parse("PageA.PageA");
+        WikiPagePath bb = PathParser.parse("PageB.PageB");
+        WikiPagePath ba = PathParser.parse("PageB.PageA");
+
+        assertTrue(a.compareTo(a) == 0); // a == a
+        assertTrue(a.compareTo(b) != 0); // a != b
+        assertTrue(ab.compareTo(ab) == 0); // ab == ab
+        assertTrue(a.compareTo(b) == -1); // a < b
+        assertTrue(aa.compareTo(ab) == -1); // aa < ab
+        assertTrue(ba.compareTo(bb) == -1); // ba < bb
+        assertTrue(b.compareTo(a) == 1); // b > a
+        assertTrue(ab.compareTo(aa) == 1); // ab > aa
+        assertTrue(bb.compareTo(ba) == 1); // bb == ba
+    }
+```
+
+Pero también existe el riesgo de que un comentario aclarativo sea incorrecto. En el ejemplo anterior, compruebe lo difícil que resulta comprobar si los comentarios son correctos. Esto explica por qué la clarificación es necesaria y también arriesgada. Por ello, __antes de escribir estos comentarios, asegúrese de que no hay una solución mejor y también de que sean precisos__.
 

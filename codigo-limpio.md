@@ -1134,3 +1134,15 @@ Apenas se tardan unos segundos en explicar nuestras intenciones en el código. _
 
 Algunos comentarios son necesarios o beneficiosos. Veremos algunos de los que considero válidos. No obstante, recuerde que el único comentario realmente bueno es el que no se tiene que escribir.
 
+### Comentarios legales
+
+En ocasiones, nuestros estándares corporativos de creación de código nos obligan a crear determinados comentarios por motivos legales. Por ejemplo, __los comentarios de derechos de autor son necesarios y deben incluirse al inicio de cada archivo__.
+El siguiente encabezado de comentario se incluye de forma estándar al inicio de todos los archivos fuente de FitNesse.
+
+```java
+    // Copyright (C) 2003, 2004, 2005 de Object Mentor, Inc. Todos los derechos reservados.
+    // Publicado bajo las condiciones de la Licencia pública general GNU versión 2 o posteriori.
+```
+
+Este tipo de comentarios no deben ser contratos ni tomos legales. Siempre que sea posible, haga referencia a una licencia estándar o a otro documento externo en lugar de incluir todos los términos y condiciones en el comentario.
+

@@ -1106,3 +1106,9 @@ Se podría afirmar que los programadores deben ser lo bastante disciplinados com
 Los comentarios imprecisos son mucho peor que la ausencia de comentarios. Suelen confundir al usuario. Generan expectativas que nunca se cumplen. Definen reglas que no deben seguirse en absoluto.
 La verdad solo se encuentra en un punto: el código. Solo el código puede contar lo que hace. Es la única fuente de información precisa. __Por tanto, aunque los comentarios sean necesarios en ocasiones, dedicaremos nuestra energía a minimizarlos__.
 
+### Los comentarios no compensan el código incorrecto
+
+__Una de las principales motivaciones para crear comentarios es el código incorrecto.__
+__Creamos un módulo y sabemos que es confuso y está desorganizado. Sabemos que es un desastre y entonces decidimos comentarlo. Error. Mejor límpielo.__
+El código claro y expresivo sin apenas comentarios es muy superior al código enrevesado y complejo con multitud de comentarios. En lugar de perder tiempo escribiendo comentarios que expliquen el desastre cometido, dedíquelo a solucionarlo.
+

@@ -1080,3 +1080,29 @@ __En este capítulo hemos visto la mecánica de la creación de funciones correc
     }
 ```
 
+## <span style="color: darkcyan">4. Comentarios</span>
+
+__No hay nada más útil que un comentario bien colocado. No hay nadaque colapse más un módulo que comentaros dogmáticos innecesarios. No hay nada más dañino que un comentario antiguo que propague mentiras y desinformación__.
+Los comentarios no son como la Lista de Schindler. No son pura bondad. De hecho, en el mejor de los casos, son un mal necesario. Si los lenguajes de programación fueran más expresivos o si pudiéramos dominarlos para expresar nuestras intenciones, no necesitaríamos demasiados comentarios, puede que incluso ninguno.
+__El uso correcto de los comentarios permite compensar nuestra incapacidad para expresarnos en el códig. He usado a palabra incapacidad, a propósito. Los comentarios siempre son fallos. Debemos usarlos porque no siempre sabemos cómo expresarnos sin ellos pero su uso no es motivo de celebración.__
+__Cuando tenga que escribir un comentario, piense si no existe otra forma de expresarse en el código. Siempre que se exprese en código, debe felicitarse. Siempre que escriba un comentario, debe hacer un gesto de desaprobación y sentir su incapacidad para expresarse__.
+¿Por qué estoy en contra de los comentarios? Porque mienten. No siempre y no siempre intencionadamente, pero lo hacen. Cuando más antiguo es un comentario y más se aleja del código que describe, mayor es la probabilidad de que sea equivocado. El motivo es sencillo. __Los programadores no los pueden mantener__.
+El código cambia y evoluciona. Los fragmentos cambian de lugar, se bifurcan, se reproducen y se vuelven a combinar para crear quimeras. Desafortunadamente, los comentarios no siempre siguen el ritmo, no siempre pueden hacerlo y suelen separarse del código que describen y se convierten en huérfanos sin precisión alguna. Por ejemplo, fíjese en lo que sucede con este comentario y la línea que pretendía describir:
+
+```java
+    MockRequest request;
+    private final String HTTP_DATE_REGEXP = 
+        "[SMTWF][a-z]{2}\\, \\s[0-9]{2}\\s[JFMASOND][a-z]{2}\\s"+
+        "[0-9]{4}\\s[0-9]{2}\\;[0-9]{2}\\:[0-9]{2}\\sGMT";
+    private Response response;
+    private FitNesseContext context;
+    private FileResponder responder;
+    private Locale saveLocale;
+    // Ejemplo: "Tue, 02 Apr 2003 22:18:49 GMT"
+```
+
+Seguramente se añadieron después otras variables de instancia entre la constante `HTTP_DATE_REGEXP` y su comentario explicativo.
+Se podría afirmar que los programadores deben ser lo bastante disciplinados como para mantener los comentarios actualizados, relevantes y precisos. De acuerdo, debería, pero esa energía debería invertirse en crear código claro y expresivo que no necesite comentario alguno.
+Los comentarios imprecisos son mucho peor que la ausencia de comentarios. Suelen confundir al usuario. Generan expectativas que nunca se cumplen. Definen reglas que no deben seguirse en absoluto.
+La verdad solo se encuentra en un punto: el código. Solo el código puede contar lo que hace. Es la única fuente de información precisa. __Por tanto, aunque los comentarios sean necesarios en ocasiones, dedicaremos nuestra energía a minimizarlos__.
+

@@ -1235,3 +1235,34 @@ __En ocasiones, basta con traducir el significado de un argumento o valor devuel
 
 Pero también existe el riesgo de que un comentario aclarativo sea incorrecto. En el ejemplo anterior, compruebe lo difícil que resulta comprobar si los comentarios son correctos. Esto explica por qué la clarificación es necesaria y también arriesgada. Por ello, __antes de escribir estos comentarios, asegúrese de que no hay una solución mejor y también de que sean precisos__.
 
+### Advertir de las consecuencias
+
+__En ocasiones es muy útil advertir a otros programadores de determinadas consecuencias__. Por ejemplo, el siguiente comentario explica por qué un determinado caso de prueba está desactivado:
+
+```java
+    // No ejecutar a menos que le sobre tiempo.
+    public void _testWithReallyBigFile() {
+        writeLinesToFile(1000000000);
+
+        response.setBody(testFile);
+        response.readyToSend(this);
+        String responseString = output.toString();
+        assertSubString("Content-Length: 1000000000", responseString);
+        assertTrue(bytesSent > 1000000000);
+    }
+```
+
+En la actualidad, evidentemente, desactivaríamos la prueba por medio de atributo `@Ignore` con la correspondiente cadena explicativa: `@Ignore("Takes too long to run")`, pero antes de la aparición de JUnit 4, era habitual añadir un guión bajo delante del nombre del método. El comentario realizaba su cometido. Veamos otro ejemplo:
+
+```java
+    public static SimpleDateFormat makeStandarHttpDateFormat() {
+        // SimpleDateFormat no es compatible con procesos,
+        // por lo que debe crear cada instancia de forma independiente.
+        SimpleDateFormat df = new SimpleDateFormat("EEE, dd MM yyyy HH:mm:ss z");
+        df.setTimeZone(TimeZone.getTimeZone("GMT"));
+        return df;
+    }
+```
+
+Seguramente conozca soluciones mejores para este problema. Estoy de acuerdo, pero el comentario es perfectamente razonable. Evita que un programador use un inicializador estático por motivos de eficacia.
+

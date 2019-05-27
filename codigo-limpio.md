@@ -1266,3 +1266,20 @@ En la actualidad, evidentemente, desactivaríamos la prueba por medio de atribut
 
 Seguramente conozca soluciones mejores para este problema. Estoy de acuerdo, pero el comentario es perfectamente razonable. Evita que un programador use un inicializador estático por motivos de eficacia.
 
+### Comentarios TODO
+
+En ocasiones conviene usar notas con forma de comentarios `//TODO`. En el siguiente caso, el comentario `TODO` explica por qué la función tiene una implementación incorrecta y cuál debe ser su futuro.
+
+```java
+    // TODO-MdM no son necesarios
+    // Esperamos que desaparezca en el modelo definitivo
+    protected VersionInfo makeVersion() throws Exception {
+        return null;
+    }
+```
+
+`TODO` __son tareas que el programador piensa que debería haber hecho pero que no es así. Pueden ser un recordatorio para eliminar una función obsoleta o una petición para resolver un problema__.
+__Pueden ser una solicitud para buscar un nombre más adecuado o para realizar un cambio que dependa de un evento planeado. Sea lo que sea, no es excusa para mantener código incorrecto en el sistema__.
+
+En la actualidad, muchos IDE cuentan con funciones especiales para localizar comentarios `TODO`,  por lo que seguramente no se pierda. Sin embargo, __no colapse el códigos con estos comentarios. Examínelos y elimine todos los que pueda__.
+

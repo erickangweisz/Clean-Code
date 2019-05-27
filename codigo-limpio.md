@@ -1168,3 +1168,43 @@ En este caso, el comentario nos indica que la expresión regular debe coincidir 
 
 __Hubiera resultado mejor y más claro si el código se hubiera cambiado a una clase especial que convirtiera los formatos de fechas y horas__. De ese modo el comentario habría sido superfluo.
 
+### Explicar la intención
+
+En ocasiones, un comentario es algo más que información útil sobre la implementación y proporciona la intención de una decisión. En el siguiente caso, vemos una interesante decisión documentada por un comentario. Al comparar dos objetos, el autor decidió ordenar los objetos de su clase por encima de los objetos de otra.
+
+```java
+    public int compareTo(Object o) {
+        if (o instanceof WikiPagePath) {
+            WikiPagePath p = (WikiPagePath) o;
+            String compressedName = StringUtil.join(names, "");
+            String compressedArgumentName = StringUtil.join(p.names, "");
+            return compressedName.compareTo(compressedArgumentName);
+        }
+        return 1; // somos mayores porque somos el tipo correcto.
+    }
+```
+
+Veamos otro ejemplo mejor. Puede que no esté de acuerdo con la solución del programador pero al menos sabe lo que intentaba hacer.
+
+```java
+    public void testConcurrentAddWidgets() throws Exception {
+        WidgetBuilder widgetBuilder =
+            new WidgetBuilder(new Class[] {BoldWidget.class});
+        String text = "'''bold text'''";
+        ParentWidget parent = 
+            new BoldWidget(new MockWidgetRoot(), "'''bold text'''");
+        AtomicBoolean failFlag = new AtomicBoolean();
+        failFlag.set(false);
+
+        // Nuestro mejor intento de obtener una condición de carrera
+        // creando un gran número de procesos.
+        for (int i=0; i<25000; i++) {
+            WidgetBuilderThread widgetBuilderThread =
+                new WidgetBuilderThread(widgetBuilder, text, parent, failFlag);
+            Thread thread = new Thread(widgetBuilder, text, parent, failFlag);
+            thread.start();
+        }
+        assertEquals(false, failFlag.get());
+    }
+```
+

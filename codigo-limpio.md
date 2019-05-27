@@ -1146,3 +1146,25 @@ El siguiente encabezado de comentario se incluye de forma estándar al inicio de
 
 Este tipo de comentarios no deben ser contratos ni tomos legales. Siempre que sea posible, haga referencia a una licencia estándar o a otro documento externo en lugar de incluir todos los términos y condiciones en el comentario.
 
+### Comentarios informativos
+
+En ocasiones es útil proporcionar información básica con un comentario. Por ejemplo, el siguiente comentario explica el valor devuelto por un método abstracto:
+
+```java
+    // Devuelve una instancia del elemento Responder probado.
+    protected abstract Responder responderInstance();
+```
+
+Estos comentarios pueden ser útiles pero es mejor usar el nombre de la función para transmitir la información siempre que sea posible. Por ejemplo, en este caso el comentario sería redundante si cambiamos el nombre de la función por `responderBeingTested`.
+Veamos un ejemplo mejor:
+
+```java
+    // el formato coincide con kk:mm:ss EEE, MMM dd, yyyy
+    Pattern timeMatcher = Pattern.compile(
+        "\\d*:\\d*:\\d* \\w*, \\w* \\d*, \\d*");
+```
+
+En este caso, el comentario nos indica que la expresión regular debe coincidir con una fecha y una hora con el formato aplicado por la función `SimpleDateFormat.format` con la cadena de formato especifidada.
+
+__Hubiera resultado mejor y más claro si el código se hubiera cambiado a una clase especial que convirtiera los formatos de fechas y horas__. De ese modo el comentario habría sido superfluo.
+

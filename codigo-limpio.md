@@ -1130,3 +1130,7 @@ o esto otro:
 
 Apenas se tardan unos segundos en explicar nuestras intenciones en el código. __En muchos casos, basta con crear una función que diga lo mismo que el comentario que pensaba escribir__.
 
+### Comentarios de calidad
+
+Algunos comentarios son necesarios o beneficiosos. Veremos algunos de los que considero válidos. No obstante, recuerde que el único comentario realmente bueno es el que no se tiene que escribir.
+

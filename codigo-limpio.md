@@ -1424,3 +1424,9 @@ Es como un vendedor de coches de segunda mano que le asegura que no hace falta r
         }
 ```
 
+### Comentarios confusos
+
+En ocasiones, a pesar de las buenas intenciones, un programador realiza una afirmación en sus comentarios que no es del todo precisa. Fíjese otra vez en el comentario redundante y confuso del __listado 4.1.__
+¿Sabe por qué es confuso? El método no devuelve nada cuando `this.closed` se convierte en `true`. Devuelve algo si `this.closed` es `true`; en caso contrario, espera y genera una excepción si `this.closed` no es `true`.
+Este sutil fragmento, oculto en un comentario más difícil de leer que el cuerpo del código, puede hacer que otro programdor invoque la función con la esperanza de que devuelva algo cuando `this.closed` sea `true`. Ese pobre programador se encontrará en una sesión de depuración intentando determinar por qué el código se ejecuta tan lentamente.
+

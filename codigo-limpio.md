@@ -1325,3 +1325,102 @@ El siguiente ejemplo es de FitNesse, donde un comentario sin duda sería de util
 ¿Pero quién carga los valores predeterminados? ¿Se cargan antes de la invocación de `loadProperties.load` o `loadProperties.load` captura la excepción, carga los valores predeterminados y después nos pasa la excepción para que la ignoremos? ¿O será que `loadProperties.load` carga todos los valores predeterminados antes de intentar abrir el archivo? ¿Intentaba el autor consolarse por dejar el bloque `catch` vacío? Esta es la posibilidad más temida, ¿se estaba diciendo que volviera más tarde para crear el código para cargar los valores predeterminados?
 __Nuestro único recurso es examinar el código en otras partes del sistema para determinar qué sucede. Cualquier comentario que le obligue a buscar su significado en otro módulo ha fallado en su intento de comunicación y no merece los bits que consume__.
 
+### Comentarios redundantes
+
+El __listado 4.1.__ muestra una sencilla función con un comentario de encabezado totalmente redundante. Seguramente se tarde más en leer que el propio código.
+
+>__Listado 4.1.__ waitForClose.
+```java
+    // Método de utilidad devuelto cuando this.closed es true. Genera una excepción
+    // si se alcanza el tiempo de espera.
+    public synchronized void waitForClose(final log timeoutMillis) throws Exception {
+        if (!closed) {
+            wait(timeoutMillis);
+            if (!closed)
+                throw new Exception("MockResponseSender could not be closed");
+        }
+    }
+```
+
+¿Para qué sirve este comentario? No es más informativo que el código. No lo justifica ni transmite la inteción ni la lógica. No es más fácil de leer que el código. De hecho, es menos preciso y obliga al lector a aceptar la falta de precisión en lugar de a entenderlo.
+Es como un vendedor de coches de segunda mano que le asegura que no hace falta revisar el motor. Fíjese ahora en la legión de javadoc inútiles y redundante del __listado 4.2.__, obtenido de Tomcat. Estos comentarios únicamente ensucian y oscurecen el ćodigo. No tiene ninguna función documental. Para empeorar las cosas, solo le mostramos algunos. El módulo tiene muchos más.
+
+>__Listado 4.2.__ ContainerBase.java(Tomcat).
+```java
+    public abstract class ContainerBase
+        implements Container, Lifecycle, Pipeline,
+        MBeanRegistration, Serializable {
+            /**
+            * Retardo del procesador para este componente.
+            */
+            protected int backgroundProcessorDelay = -1;
+
+            /**
+            * Compatibilidad con eventos de ciclo vital de este componente.
+            */
+            protected LifecycleSupport lifecycle =
+                new LifecycleSupport(this);
+
+            /**
+            * Escuchadores de eventos de contenedores de este contenedor.
+            */
+            protected ArrayList listeners = new ArrayList();
+
+            /**
+            * Implementación Loader a la que se asocia este contenedor.
+            */
+            protected Loader loader = null;
+
+            /**
+            * Implementación Logger a la que se asocia este contendor.
+            */
+            protected Log logger = null;
+
+            /**
+            * Nombre de registrador asociado.
+            */
+            protected String logName = null;
+
+            /**
+            * Implementación Manager a la que se asocia este contenedor.
+            */
+            protected Manager manager = null;
+
+            /**
+            * Clúster al que se asocia este contenedor.
+            */
+            protected Cluster cluster = null;
+
+            /**
+            * Nombre legible de este contenedor.
+            */
+            protected String name = null;
+
+            /**
+            * Contenedor principal de este contenedor.
+            */
+            protected Container parent = null;
+
+            /**
+            * Cargador de clase principal que configurar al instalar un elemento
+            * Loader.
+            */
+            protected ClassLoader parentClassLoader = null;
+
+            /**
+            * Objeto Pipeline al que se asocia este contenedor.
+            */
+            protected Pipeline pipeline = new StandardPipeline(this);
+
+            /**
+            * Objeto Realm al que se asocia este contenedor.
+            */
+            protected Realm realm = null;
+
+            /**
+            * Objeto DirContext de recursos al que se asocia este contenedor.
+            */
+            protected DirContext resources = null;
+        }
+```
+

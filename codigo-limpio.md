@@ -1283,3 +1283,15 @@ __Pueden ser una solicitud para buscar un nombre más adecuado o para realizar u
 
 En la actualidad, muchos IDE cuentan con funciones especiales para localizar comentarios `TODO`,  por lo que seguramente no se pierda. Sin embargo, __no colapse el códigos con estos comentarios. Examínelos y elimine todos los que pueda__.
 
+### Amplificación
+
+Se puede usar un comentario para amplificar la importancia de algo que, en caso contrario, parecería irrelevante.
+
+```java
+    String listItemContent = match.group(3).trim();
+    // el recorte es importante. Elimina los espacios iniciales
+    // que harían que el elemento se reconociera como otra lista
+    new ListItemWidget(this, listItemContent, this.level + 1);
+    return buildList(text.substring(match.end()));
+```
+

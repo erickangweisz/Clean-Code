@@ -1304,3 +1304,24 @@ Si usa una API pública, debe crear javadoc de calidad para la misma, pero __rec
 
 Muchos comentarios pertenecen a esta categoría. __Suelen ser excusas de código pobre o justificaciones de decisiones insuficientes__, algo así como si el programador se hablara a si mismo.
 
+### Balbucear
+
+Añadir un comentario sin razón o porque el proceso lo require es un error. __Si decide escribir un comentario, tómese el tiempo necesario para asegurarse de que sea mejor que puede redactar__.
+El siguiente ejemplo es de FitNesse, donde un comentario sin duda sería de utilidad, pero el autor tenía prisa o no prestó demasiada atención. Su balbuceo generó un enigma:
+
+```java
+    public void loadProperties() {
+        try {
+            String propertiesPath = propertiesLocation + "/" + PROPERTIES_FILE;
+            FileInputStream propertiesStream = new FileInputStream(propertiesPath);
+            loadedProperties.load(propertiesStream);
+        } catch (IOException e) {
+            // si no hay archivos de propiedades significan que cargan las predeterminadas
+        }
+    }
+```
+
+¿Qué significa el comentario del bloque `catch`? Seguro que algo para el autor pero el significado no está claro. Aparentemente, si se genera `IOException`, significa que no hay archivo de propiedades y, en ese caso, se cargan los valores predeterminados.
+¿Pero quién carga los valores predeterminados? ¿Se cargan antes de la invocación de `loadProperties.load` o `loadProperties.load` captura la excepción, carga los valores predeterminados y después nos pasa la excepción para que la ignoremos? ¿O será que `loadProperties.load` carga todos los valores predeterminados antes de intentar abrir el archivo? ¿Intentaba el autor consolarse por dejar el bloque `catch` vacío? Esta es la posibilidad más temida, ¿se estaba diciendo que volviera más tarde para crear el código para cargar los valores predeterminados?
+__Nuestro único recurso es examinar el código en otras partes del sistema para determinar qué sucede. Cualquier comentario que le obligue a buscar su significado en otro módulo ha fallado en su intento de comunicación y no merece los bits que consume__.
+

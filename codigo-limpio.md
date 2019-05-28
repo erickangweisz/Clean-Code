@@ -1295,3 +1295,7 @@ Se puede usar un comentario para amplificar la importancia de algo que, en caso 
     return buildList(text.substring(match.end()));
 ```
 
+### Javadoc en API públicas
+
+__No hay nada más útil y satisfactorio que una API pública bien descrita__. Los javadoc de la biblioteca estándar de Java son un ejemplo. Sería muy complicado crear programas de Java sin ellos.
+Si usa una API pública, debe crear javadoc de calidad para la misma, pero __recuerde el siguiente consejo a lo largo del capítulo: los javadoc pueden ser tan ambiguos, amplios y descorteses como cualquier otro tipo de documento__.

@@ -1577,3 +1577,12 @@ __Se podría cambiar sin el comentario ed esta forma:__
 
 El autor del código original seguramente escribió primero el comentario (improbable) y después el código para ajustarlo al comentario. Sin embargo, __el autor tendría que haber refactorizado el código, como hice yo, para poder eliminar el comentario__.
 
+### Marcadores de posición
+
+En ocasiones los programadores marcan una determinada posición en un archivo.
+Por ejemplo, recientemente encontré esto en un programa:
+`// Acciones /////////////////////`
+
+Son escasas las ocasiones en las que tiene sentido agrupar funciones bajo esta estructura. Por lo general, debe eliminarse, sobre todo la molesta hilera de barras al final.
+Piénselo de esta forma. __Estas estructuras son atractivas si no las usa demasiado. Por ello, úselas esporádicamente y solo cuando el beneficio sea significativo__. Si las usa en exceso, acabarán por ser ignoradas.
+

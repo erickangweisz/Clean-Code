@@ -1617,3 +1617,8 @@ En ocasiones, los programadores incluyen comentarios especiales en llaves de cie
     }
 ```
 
+### Asignaciones y menciones
+
+`/* Añadido por Rick */`
+__Los sistemas de control de código fuente recuerdan a la perfección quién ha añadido qué y cuándo. No es necesario plagar el código con pequeñas menciones__. Puede pensar que estos comentarios son útiles y que ayudan a otros a hablar sobre el código, pero en realidad sobreviven durante años y cada vez son menos precisos y relevantes. El sistema de control de código fuente es el punto idóneo para este tipo de información.
+

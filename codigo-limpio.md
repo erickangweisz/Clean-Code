@@ -1515,3 +1515,25 @@ El primer comentario del __listado 4.4.__ parece correcto. Explica por qué se i
 
 En lugar de explotar en un comentario sin sentido, el programador debería haber sabido que su frustración se podría aliviar mejorando la estructura del código. Tendría que haber centrado su energía en extraer el último bloque `try/catch` en una función independiente, como muestra el __listado 4.5.__
 
+>__Listado 4.5.__ startSending(refactorizado).
+```java
+    private void startSending() {
+        try {
+            doSending();
+        } catch (SocketException e) {
+            // normal. alguien ha detenido la solicitud.
+        }
+    }
+
+    private void addExceptionAndCloseResponse(Exception e) {
+        try {
+            response.add(ErrorResponder.makeExceptionString(e));
+            response.closeAll();
+        } catch (Exception e1) {
+
+        }
+    }
+```
+
+__Cambie la tentación de crear elementos sobrantes por la determinación de limpiar su código. Mejorará como programador y será más fácil__.
+

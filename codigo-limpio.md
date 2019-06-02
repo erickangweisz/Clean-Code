@@ -1537,3 +1537,23 @@ En lugar de explotar en un comentario sin sentido, el programador debería haber
 
 __Cambie la tentación de crear elementos sobrantes por la determinación de limpiar su código. Mejorará como programador y será más fácil__.
 
+### Comentarios sobrantes espeluznantes
+
+Los javadoc también pueden ser innecesarios. ¿Para qué sirven los siguientes javadoc (de un conocida biblioteca de código abierto? La respuesta: para nada. Son comentarios redundantes creados en un intento equivocado de redactar documentación.
+
+```java
+    /** El nombre. */
+    private String name;
+
+    /** La versión. */
+    private String version;
+
+    /** El licenceName */
+    private Strnig licenceName;
+
+    /** La versión */
+    private String info;
+```
+
+Vuelva a leer los comentarios. ¿Detecta el error de corta y pega? Si los autores no prestan atención al escribir sus comentarios (o al pegarlos), ¿por qué se espera que sean de utilidad para los lectores?
+

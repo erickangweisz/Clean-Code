@@ -1620,5 +1620,36 @@ En ocasiones, los programadores incluyen comentarios especiales en llaves de cie
 ### Asignaciones y menciones
 
 `/* Añadido por Rick */`
-__Los sistemas de control de código fuente recuerdan a la perfección quién ha añadido qué y cuándo. No es necesario plagar el código con pequeñas menciones__. Puede pensar que estos comentarios son útiles y que ayudan a otros a hablar sobre el código, pero en realidad sobreviven durante años y cada vez son menos precisos y relevantes. El sistema de control de código fuente es el punto idóneo para este tipo de información.
+__Los sistemas de control de código fuente recuerdan a la perfección quién ha añadido qué y cuándo. No es necesario plagar el código con pequeñas menciones__. Puede pensar que estos comentarios son útiles y que ayudan a otros a hablar sobre el código, pero en realidad sobreviven durante años y cada vez son menos precisos y relevantes. __El sistema de control de código fuente es el punto idóneo para este tipo de información__.
 
+### Código comentado
+
+No hay nada más odioso que el código comentado. ¡No lo haga!
+
+```java
+    InputStreamResponse response = new InputStreamResponse();
+    response.setBody(formatter.getResultStream(), formatter.getByteCount());
+    // InputStream resultStream = formatter.getResultStream();
+    // StreamReader reader = new StreamReader(resultsStream);
+    // response.setContent(reader.read(formatter.getByteCount()));
+```
+
+Los lectores que vean código comentado no tendrán el valor de borrarlo. Pensarán que está ahí por algo y que es demasiado importante para borrarlo. Por ello, el código comentado se acumula como los sedimentos en una botella de vino malo.
+Fíjese en este fragmento de apache commons:
+
+```java
+    this.bytePos = writeBytes(pngIdBytes, 0);
+    // hdrPos = bytePos;
+    writeHeader();
+    writeResolution();
+    // dataPos = bytePos;
+    if (writeImageData()) {
+        writeEnd();
+        this.pngBytes = resizeByteArray(this.pngBytes, this.maxPos);
+    } else {
+        this.pngBytes = null;
+    }
+    return this.pngBytes;
+```
+
+¿Por qué hay dos líneas comentadas? ¿Son importantes? ¿Se han conservado como recordatorio de un cambio inminente o es algo que alguien comentó hace años y no se ha preocupado de limpiar? Hubo una época, en la década de 1960, en la que el código comentado pudo ser útil, pero hace tiempo que contamos con buenos sistemas de control de código fuente, sistemas que recuerdan el código por nosotros. Ya no tenemos que comentarlo. Elimínelo. No lo perderá. Se lo aseguro.

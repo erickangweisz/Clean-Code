@@ -1452,3 +1452,12 @@ Es una locura tener una regla que afirme que todas las funciones deben tener un 
                 cdList.add(cd);
             }
 ```
+
+### Comentarios periódicos
+
+En ocasiones, se añade un comentario al inicio de un módulo cada vez que se edita.
+Estos comentarios acumulan una especie de registro de todos los cambios realizados.
+He visto módulos con decenas de páginas con estas entradas.
+
+Desde la aparición de los sistemas de control estos comentarios son completamente inecesarios y han de ser eliminados totalmente.
+

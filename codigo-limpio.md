@@ -1461,3 +1461,57 @@ He visto módulos con decenas de páginas con estas entradas.
 
 Desde la aparición de los sistemas de control estos comentarios son completamente inecesarios y han de ser eliminados totalmente.
 
+### Comentarios sobrantes
+
+En ocasiones vemos comentarios que simplemente sobran. Restan importancia a lo evidente y no ofrecen información nueva.
+
+```java
+    /**
+    * constructor predeterminado.
+    */
+    protected AnnualDateRule() {}
+```
+
+¿En serio? ¿Y este otro?:
+
+```java
+    // Día del mes
+    private int dayOfMonth;
+```
+
+Y aquí el parangón de la redundancia:
+
+```java
+    /**
+    * Devuelve el día del mes.
+    *
+    * @return el dia del mes.
+    */
+    public int getDayOfMonth() {
+        return dayOfMonth;
+    }
+```
+
+Estos comentarios son tan inservibles que aprendemos a ignorarlos. Al leer el código, la vista los salta. Con el tiempo, los comentarios empiezan a mentir cuando cambia el código que les rodea.
+El primer comentario del __listado 4.4.__ parece correcto. Explica por qué se ignora el bloque `catch`, pero el segundo comentario sobra. Parece que el programador estaba tan frustrado con crear bloques `try/catch` en la función que necesitaba explotar.
+
+> __Listado 4.4.__ startSending.
+```java
+    private void startSending() {
+        try {
+            doSending();
+        } catch (SocketException e) {
+            // normal. alguien ha detenido la solicitud.
+        } catch (Exception e) {
+            try {
+                response.add(ErrorResponder.makeExceptionString(e));
+                response.closeAll();
+            } catch (Exception e1) {
+                // ¡Un respiro!
+            }
+        }
+    }
+```
+
+En lugar de explotar en un comentario sin sentido, el programador debería haber sabido que su frustración se podría aliviar mejorando la estructura del código. Tendría que haber centrado su energía en extraer el último bloque `try/catch` en una función independiente, como muestra el __listado 4.5.__
+

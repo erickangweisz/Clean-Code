@@ -1430,3 +1430,25 @@ En ocasiones, a pesar de las buenas intenciones, un programador realiza una afir
 ¿Sabe por qué es confuso? El método no devuelve nada cuando `this.closed` se convierte en `true`. Devuelve algo si `this.closed` es `true`; en caso contrario, espera y genera una excepción si `this.closed` no es `true`.
 Este sutil fragmento, oculto en un comentario más difícil de leer que el cuerpo del código, puede hacer que otro programdor invoque la función con la esperanza de que devuelva algo cuando `this.closed` sea `true`. Ese pobre programador se encontrará en una sesión de depuración intentando determinar por qué el código se ejecuta tan lentamente.
 
+### Comentarios obligatorios
+
+Es una locura tener una regla que afirme que todas las funciones deben tener un javadoc o que todas las variables deben tener un comentario. Este tipo de comentarios ensucian el código y generan confusión y desorganización. Por ejemplo, los javadoc obligatorios para todas las funciones crean abominacones como el __listado 4.3.__ No sirven de nada, complican el código y constituyen posibles engaños y desorientaciones.
+
+> __Listado 4.3.__
+```java
+    /**
+    * @param title El título del CD
+    * @param author El autor del CD
+    * @param tracks El número de pistas del CD
+    * @param durationInMinutes La duración del CD en minutos
+    */
+    public void addCD(String title, String author,
+            int tracks, int durationInMinutes) {
+                CD cd = new CD();
+                cd.title = title;
+                cd.author = author;
+                cd.tracks = tracks;
+                cd.durationInMinutes = durationInMinutes;
+                cdList.add(cd);
+            }
+```

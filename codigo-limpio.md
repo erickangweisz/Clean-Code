@@ -1586,3 +1586,34 @@ Por ejemplo, recientemente encontré esto en un programa:
 Son escasas las ocasiones en las que tiene sentido agrupar funciones bajo esta estructura. Por lo general, debe eliminarse, sobre todo la molesta hilera de barras al final.
 Piénselo de esta forma. __Estas estructuras son atractivas si no las usa demasiado. Por ello, úselas esporádicamente y solo cuando el beneficio sea significativo__. Si las usa en exceso, acabarán por ser ignoradas.
 
+### Comentarios de llave de cierre
+
+En ocasiones, los programadores incluyen comentarios especiales en llaves de cierre, como el __listado 4.6.__ __Aunque puede tener sentido en funciones extensas con estructuras anidadas, únicamente estorba a las funciones encapsuladas y de pequeño tamaño que nos gustan. Por ello, se siente el deseo de marcar sus llaves de cierre, pruebe a reducir el tamaño de sus funciones__.
+
+> __Listado 4.6.__ wc.java.
+```java
+    public class wc {
+        public static void main(String[] args) {
+            BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+            String line;
+            int lineCount = 0;
+            int charCount = 0;
+            int wordCount = 0;
+            try {
+                while ((line = in.readLine()) != null) {
+                    lineCount++;
+                    charCount += line.length();
+                    String words[] = line.split("\\W");
+                    wordCount += words.length;
+                } // while
+                System.out.println("wordCount = " + wordCount);
+                System.out.println("lineCount = " + lineCount);
+                System.out.println("charCount = " + charCount);
+            } // try
+            catch (IOException e) {
+                System.err.println("Error: " + e.getMessage());
+            } // catch
+        } // main
+    }
+```
+

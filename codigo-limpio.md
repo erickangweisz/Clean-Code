@@ -1557,3 +1557,23 @@ Los javadoc también pueden ser innecesarios. ¿Para qué sirven los siguientes 
 
 Vuelva a leer los comentarios. ¿Detecta el error de corta y pega? Si los autores no prestan atención al escribir sus comentarios (o al pegarlos), ¿por qué se espera que sean de utilidad para los lectores?
 
+### No usar comentarios si se puede usar una función o una variable
+
+Fíjese en el siguiente código:
+
+```java
+    // ¿el módulo de la lista global <mod> depende del
+    // subsistema del que formamos parte?
+    if (smodule.getDependSubsystems().contains(subSysMod.getSubsSystem()))
+```
+
+__Se podría cambiar sin el comentario ed esta forma:__
+
+```java
+    ArrayList moduleDependees = smodule.getDependSubsystems();
+    String ourSubSystem = subSysMod.getSubSystem();
+    if (moduleDependees.contains(ourSubSystem))
+```
+
+El autor del código original seguramente escribió primero el comentario (improbable) y después el código para ajustarlo al comentario. Sin embargo, __el autor tendría que haber refactorizado el código, como hice yo, para poder eliminar el comentario__.
+

@@ -1740,3 +1740,141 @@ __Las funciones breves apenas requieren explicación. Un nombre bien elegido par
 ### Javadocs en código no público
 
 __A pesar de la utilidad de los javadoc para las API públicas, no sirven para código no dirigido a consumo público. La generación de páginas javadoc para clases y funciones de un sistema no suele ser útil y la formalidad adicional de los comentarios javadoc no es más que una distracción__.
+
+### Ejemplo
+
+Escribí el módulo del __listado 4.7.__ para la primera versión de XP Immersión. Debía ser un ejemplo de estilo incorrecto de creación de código y comentarios. Después, Kent Beck refactorizó este código en algo mucho más atractivo delante de varios alumnos. Posteriormente, adapté el ejemplo para mi libro _Agile Software Development, Principles, Patterns, and Practices_ y para el primero de mis artículos _Craftsman_ publicados en la revista _Software Development_.
+Lo que me fascina de este módulo es que hubo un tiempo en que muchos lo hubiéramos considerado bien documentado. Ahora vemos que es un auténtico desastre. A ver cuántos problemas detecta en los comentarios.
+
+> __Listado 4.7.__ GeneratePrimes.java.
+```java
+    /**
+    * Esta clase genera números primos hasta la cantidad máxima especificada por el
+    * usuario. El algoritmo usado es la Criba de Eratóstenes.
+    * <p>
+    * Eratóstenes de Cirene, 276 a. C., Cirene, Libia --
+    * 194 a. C., Alejandría. El primer hombre en calcular la
+    * circunferencia de la Tierra. También trabajo con calendarios
+    * con años bisiestos y fue responsable de la Biblioteca de Alejandría.
+    * <p>
+    * El algoritmo es muy simple. Dada una matriz de enteros
+    * empezando por el 2, se tachan todos los multiplos de 2. Se busca el siguiente
+    * entero sin tachar y se tachan todos sus multiplos.
+    * Repetir hasta superar la raíz cuadrada del valor
+    * máximo.
+    *
+    * @author Alphonse
+    * @version 13 Feb 2002 atp
+    */
+    import java.util.*;
+
+    public class GeneratePrimes {
+        /**
+        * @param maxValue es el límite de generación.
+        */
+        public static int[] generatePrimes(int maxValue) {
+            if (maxValue >= 2) {// el único caso válido
+                // declaraciones
+                int s = maxValue + 1; // tamaño de la matriz
+                boolean[] f = new boolean[s];
+                int i;
+
+                // inicializar la matriz en true.
+                for (i=0; i<s; i++)
+                    f[i] = true;
+
+                // eliminar los números no primos conocidos
+                f[0] = f[1] = false;
+
+                // cribar
+                int j;
+                for (i=2; i<Math.sqrt(s) + 1; i++) {
+                    if (f[i]) {// si no está tachado, tachar sus múltiplos.
+                        for (j=2 * i; j<s; j+=i)
+                            f[j] = false; // el múltiplo no es primo
+                    }
+                }
+
+                // ¿cuántos primos hay?
+                int count = 0;
+                for (i=0; i<s; i++) {
+                    if (f[i])
+                        count++; // contador
+                }
+
+                int[] primes = new int[count];
+
+                // enviar primos al resultado
+                for (i=0, j=0; i<s; i++) {
+                    if (f[i]) // si es primo
+                        primes[j++] = i;
+                }
+                return primes; // devolver los primos
+            } else { // maxValue < 2
+                return new int[0]; // devolver matriz null si la entrada no es correcta
+            }
+        }
+    }
+```
+
+En el __listado 4.8.__ puede ver una versión refactorizada del mismo módulo. Se ha limitado considerablemente el uso de comentarios. Hay solo dos en todo el módulo y ambos claramente descriptivos.
+
+```java
+    /**
+    * Esta clase genera numeros primos hasta la cantidad máxima especificada por el
+    * usuario. El algoritmo usado es la Criba de Eratóstenes. dada una matriz de enteros 
+    * empezando por el 2: buscar el primer entero sin tachar y tachar todos sus 
+    * multiplos. Repetir hasta que no haya más multiplos en la matriz.
+    */
+    public class PrimeGenerator {
+        private static boolean[] crossedOut;
+        private static int[] result;
+
+        public static int[] generatePrimes(int maxValue) {
+            if (maxValue < 2)
+                return new int[0];
+            else {
+                uncrossIntegersUpTo(maxValue);
+                crossOutMultiples();
+                putUncrossedIntegersIntoResult();
+                return result;
+            }
+        }
+    }
+    
+    private static void uncrossIntegersUpTo(int maxValue) {
+        crossedOut = new boolean[maxValue + 1];
+        for (int i=2; i<crossedOut.length; i++)
+            crossedOut[i] = false;
+    }
+
+    private static void crossOutMultiplesOf(int i) {
+        for (int multiple = 2*i;
+            multiple < crossedOut.length;
+            multiple += i)
+        crossedOut[multiple] = true;
+    }
+    
+    private static boolean notCrossed(int i) {
+        return crossedOut[i] == false;
+    }
+
+    private static void putUncrossedIntegersIntoResult() {
+        result = new int[numberOfUncrossedIntegers()];
+        for (int j=0, i=2; i<crossedOut.length; i++) {
+            if (notCrossed(i))
+                result[j++] = i;
+        }
+    }
+
+    private static int numberOfUncrosedIntegers() {
+        int count = 0;
+        for (int i=2; i<crossedOut.length; i++)
+            if (notCrossed(i))
+                count++;
+
+        return count;
+    }
+```
+
+Se podría decir que el primer comentario es redundante ya que es muy similar a la función `generatePrimes`, pero creo que muestra mejor el algoritmo al lector, motivo por el que lo he mantenido. El segundo argumento es sin duda necesario. Explica la lógica del uso de la raíz cuadrada como límite del bucle. No encontré otro nombre de variable más sencillo ni otra estructura de código que lo aclarara más. Por otra parte, el uso de la raíz cuadrada podría resultar presuntuoso. ¿Realmente se ahorra tanto tiempo limitando la iteración a la raíz cuadrada? ¿El cálculo de la raíz cuadrada llevaría más tiempo del que se ahorra? Conviene analizarlo. El uso de la raíz cuadrada como límite de iteración satisface al viejo hacker de C y de lenguajes de ensamblado de mi interior pero no estoy convencido de que merezca el tiempo y el esfuerzo que los demás puedan dedicar a entenderlo.

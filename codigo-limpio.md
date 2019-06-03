@@ -1737,3 +1737,6 @@ __La conexión entre un comentario y el código que describe debe ser evidente. 
 
 __Las funciones breves apenas requieren explicación. Un nombre bien elegido para una función que hace una cosa suele ser mejor que un encabezado de comentario__.
 
+### Javadocs en código no público
+
+__A pesar de la utilidad de los javadoc para las API públicas, no sirven para código no dirigido a consumo público. La generación de páginas javadoc para clases y funciones de un sistema no suele ser útil y la formalidad adicional de los comentarios javadoc no es más que una distracción__.

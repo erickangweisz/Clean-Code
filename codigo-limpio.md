@@ -1718,3 +1718,18 @@ __No incluya en sus comentarios interesantes reflexiones históricas ni irreleva
         es, el primer bit del fujo será el bit de orden más alto en
         el primer byte de 8 bits, y así sucesivamente.
 ```
+
+### Conexiones no evidentes
+
+__La conexión entre un comentario y el código que describe debe ser evidente. Si se a preocupado de escribir un comentario, lo mínimo es que el lector que lo vea entienda a qué se refiere__. Fíjese en este comentario obtenido de apache commons:
+
+```java
+    /*
+    * comenza con una matriz de tamaño sucifiente para albergar todos los pixeles
+    * (más bytes de filtro), y 200 bytes adicionales para la información de encabezado
+    */
+    this.pngBytes = new byte[((this.width + 1) * this.heigth * 3) + 200];
+```
+
+¿Qué es un byte de filtro? ¿Está relacionado con +1? ¿O con *3? ¿Con ambos? ¿Es un píxel un byte? ¿Por qué 200? La función de un comentario es explicar código que no se explica por sí mismo. Es una lástima que un comentario requiera su propia explicación.
+

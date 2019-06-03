@@ -1733,3 +1733,7 @@ __La conexión entre un comentario y el código que describe debe ser evidente. 
 
 ¿Qué es un byte de filtro? ¿Está relacionado con +1? ¿O con *3? ¿Con ambos? ¿Es un píxel un byte? ¿Por qué 200? La función de un comentario es explicar código que no se explica por sí mismo. Es una lástima que un comentario requiera su propia explicación.
 
+### Encabezados de función
+
+__Las funciones breves apenas requieren explicación. Un nombre bien elegido para una función que hace una cosa suele ser mejor que un encabezado de comentario__.
+

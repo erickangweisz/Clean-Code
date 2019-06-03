@@ -1653,3 +1653,30 @@ Fíjese en este fragmento de apache commons:
 ```
 
 ¿Por qué hay dos líneas comentadas? ¿Son importantes? ¿Se han conservado como recordatorio de un cambio inminente o es algo que alguien comentó hace años y no se ha preocupado de limpiar? Hubo una época, en la década de 1960, en la que el código comentado pudo ser útil, pero hace tiempo que contamos con buenos sistemas de control de código fuente, sistemas que recuerdan el código por nosotros. Ya no tenemos que comentarlo. Elimínelo. No lo perderá. Se lo aseguro.
+
+### Comentarios HTML
+
+__El HTML en comentarios de código fuente es una aberración__, como puede apreciar en el siguiente fragmento. Dificulta la lectura de los comentarios donde debería ser más fácil: el editor o IDE. Si los comentarios se van a extraer con una herramienta (como Javadoc) para mostrarlos en una página Web, debe ser responsabilidad de dicha herramienta y no del programador el adornar los comentarios con el correspondiente HTML.
+
+```
+    /**
+    * Tarea para ejecutar pruebas de aceptación.
+    * Esta tarea ejecuta pruebas de aceptación y publica los resultados.
+    * <p/>
+    * <pre>
+    * Uso:
+    * &lt;taskdef classpathref=&quot;classpath&quot;
+    *       resource=&quot;tasks.properties&quot; /&gt;
+    * OR
+    * &lt;taskdef classpathref=&quot;classpath&quot;
+    *       resource=&quot;tasks.properties&quot; /&gt;
+    * <p/>
+    * &lt;execute-fitnesse-tests
+    *       suitepage=&quot;FitNesse.SuiteAcceptanceTests&quot;
+    *       fitnesseport=&quot;8082&quot;
+    *       resultsdir=&quot;${results.dir}&quot;
+    *       resultshtmlpage=&quot;fit-results.html&quot;
+    *       classpathref=&quot;classpath&quot; /&gt;
+    * </pre>
+    */
+```

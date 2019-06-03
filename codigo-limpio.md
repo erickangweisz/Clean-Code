@@ -1680,3 +1680,20 @@ __El HTML en comentarios de código fuente es una aberración__, como puede apre
     * </pre>
     */
 ```
+
+### Información no local
+
+__Si tiene que escribir un comentario, asegúrese de que describa el código que le rodea.__
+__No ofrezca información global del sistema en el contexto de un comentario local__. Fíjese en el siguiente comentario javadoc. Aparte de su terrible redundancia, también ofrece información sobre el puerto predeterminado y la función no tiene control alguno sobre el puerto predeterminado. El comentario no describe la función sino otra parte distinta del sistema. Evidentemente, no hay garantías de que el comentario cambie cuando lo haga el código que contiene el valor predeterminado.
+
+```java
+    /**
+    * Puerto para ejecución fitnesse. El predeterminado es <b>8082</b>.
+    *
+    * @param fitnessePort
+    */
+
+    public void setFitnessePort(int fitnessePort) {
+        this.fitnessePort = fitnessePort;
+    }
+```

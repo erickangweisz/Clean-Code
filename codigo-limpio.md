@@ -1697,3 +1697,24 @@ __No ofrezca información global del sistema en el contexto de un comentario loc
         this.fitnessePort = fitnessePort;
     }
 ```
+
+### Demasiada información
+
+__No incluya en sus comentarios interesantes reflexiones históricas ni irrelevantes descripciones de detalles__. El siguiente comentario se ha extraído de un módulo diseñado para probar que una función puede codificar y descodificar base64. Aparte del número RFC, el lector de este código no necesita la información obsoleta que contiene el comentario.
+
+```java
+    /*
+        RFC 2045 - Extensiones Multipropósito de coreo de Internet (MIME)
+        Primera parte: Format del Cuerpo de los Mensajes de Internet
+        sección 6.8. Codificación de transferencia de contenidos Base64
+        El proceso de codificación representa grupos de 24 bits de la entrada
+        como cadenas de salida de 4 caracteres codificados. Procediendo de 
+        izquierda a derecha, se forma un grupo de 24 bits de entrada 
+        concatenando 3 grupos de 8 bits de entrada. Estos 24 bits se tratan 
+        como 4 grupos concatenados de 6 bits, cada uno de los cuales se
+        traduce en un sólo dígito del alfabeto base64. Cuando se codifica un
+        flujo de bits mediante la codificación base64, el flujo de bits se 
+        debe considerar ordenado con el bit más significativo primero. Esto
+        es, el primer bit del fujo será el bit de orden más alto en
+        el primer byte de 8 bits, y así sucesivamente.
+```

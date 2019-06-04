@@ -1884,3 +1884,9 @@ Se podría decir que el primer comentario es redundante ya que es muy similar a 
 __Cuando los usuarios miran entre bastidores, queremos que queden impresionados por el atractivo, la coherencia y la atención al detalle que perciben. Queremos que el orden les sorprenda, que abran los ojos con asombro cuando se desplacen por los módulos. Queremos que aprecien que se trata de un trabajo de profesionales__. Si ven una masa amorfa de código que parece escrito por un grupo de marineros borrachos, es probable que piensen que sucederá lo mismo en otros aspectos del proyecto.
 Debe preocuparse por el formato de su código. __Debe elegir una serie de reglas sencillas que controlen el formato del código y después aplicarlas de forma coherente__. Si trabaja en equipo, debe acordar una serie de reglas que todos los miembros deben cumplir. También es muy útil usar una herramienta automatizada que se engargue de aplicar las reglas.
 
+### La función del formato
+
+En primer lugar, debe ser claro. El formato de código es importante, demasiado importante como para ignorarlo y también demasiado importante como para tratarlo de forma religiosa. __El formato del código se basa en la comunicación y la comunicación debe ser el principal pilar de un desarrollador profesional__.
+Puede que piense que conseguir que algo funcione es la principal preocupación de un programador profesional. Espero que este libro le haga cambiar de idea. __La funcionalidad que cree hoy es muy probable que cambie en la siguiente versión, pero la legibilidad de su código afectará profundamente a todos los cambios que realice__. __El estilo del código y su legibilidad establecen los precedentes que afectan a la capacidad de mantenimiento y ampliación mucho después de que su código cambie. Su estilo y su disciplina sobrevivirán, aunque el código no lo haga__.
+Veamos qué aspectos del formato nos permiten comunicarnos mejor.
+

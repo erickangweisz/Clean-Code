@@ -1890,3 +1890,17 @@ En primer lugar, debe ser claro. El formato de código es importante, demasiado 
 Puede que piense que conseguir que algo funcione es la principal preocupación de un programador profesional. Espero que este libro le haga cambiar de idea. __La funcionalidad que cree hoy es muy probable que cambie en la siguiente versión, pero la legibilidad de su código afectará profundamente a todos los cambios que realice__. __El estilo del código y su legibilidad establecen los precedentes que afectan a la capacidad de mantenimiento y ampliación mucho después de que su código cambie. Su estilo y su disciplina sobrevivirán, aunque el código no lo haga__.
 Veamos qué aspectos del formato nos permiten comunicarnos mejor.
 
+### Formato vertical
+
+Comencemos por el tamaño vertical. ¿Qué tamaño debe tener un archivo fuente? En Java, el tamaño de los archivos está relacionado con el tamaño de las clases, como veremos más adelante. Por el momento, nos detendremos en el tamaño de los archivos.
+¿Qué tamaño tienen la mayoría de archivos fuente de Java? Existe una amplia gama de tamaños e importantes diferencias de estilo, como se aprecia en la figura 5.1.
+
+> __Figura 5.1.__ Escala LOG de distribuciones de longitud de archivos (altura del cuadro = sigma).
+[ Imagen de gráfico ]
+
+Se escriben siete proyectos: JUnit, FitNesse, testNG, Time and Money, JDepend, Ant y Tomcat. Las líneas que cruzan los cuadros muestran la longitud máxima y mínima de cada proyecto. El cuadro muestra aproximadamente un tercio (una desviación estandar) de los archivos. La parte central del cuadro es la media. Por tanto, el tamaño de archivo medio del proyecto FitNesse es de 65 líneas y un tercio de los archivos ocupan entre 40 y 100+ líneas.
+El mayor archivo de FitNese tiene una 400 líneas y el de menor tamaño, 6. Es una escala de registro, de modo que la pequeña diferencia de posición vertical supone una gran diferencia en tamaño absoluto.
+
+Junit, FitNesse y Time and Money tienen archivos relativamente pequeños. Ninguno supera las 500 líneas y la mayoría tienen menos de 200. Tomcat y Ant, por su parte, tienen archivos con varios miles de líneas de longitud y más de la mitad superan las 200.
+__¿Qué significa todo esto? Aparentemente se pueden crear sistemas (FitNesse se aproxima a las 50.000 líneas) a partir de archivos de unas 200 líneas de longitud, con un límite máximo de 500. Aunque no debería ser una regla, es un intervalo aconsejable. Los archivos de pequeño tamaño se entienden mejor que los grandes__.
+

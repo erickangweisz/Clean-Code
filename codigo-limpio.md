@@ -2003,3 +2003,10 @@ __Listado 5.4.__
         }
     }
 ```
+
+### Distancia vertical
+
+¿Alguna vez ha tenido que recorrer una clase, saltando de una función a otra, desplazándose por el código para intentar adivinar la relación y el funcionamiento de las funciones, y acabar totalmente confundido? ¿Alguna vez ha escudriñado la cadena de herencia buscando la definición de una variable o función? Resulta frustrante porque intenta comprender lo que hace el sistema pero pierde el tiempo y su energía mental en intentar localizar y recordar sus elementos.
+__Los conceptos relacionados entre sí deben mantenerse juntos verticalmente__ <span style="color: Maroon">[G10]</span>.
+Esta regla no funciona con conceptos de archivos independientes. Por lo tanto, __no debe separar conceptos relacionados en archivos independientes a menos que tenga un motivo de peso. De hecho, es uno de los motivos por los que se debe evitar el uso de variables protegidas__.
+Para los conceptos relacionados que pertenecen al mismo archivo, su separación vertical debe medir su importancia con respecto a la legibilidad del otro. __Debe evitar que el lector deambule entre archivos y clases__.

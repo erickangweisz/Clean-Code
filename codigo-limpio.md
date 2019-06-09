@@ -2010,3 +2010,56 @@ __Listado 5.4.__
 __Los conceptos relacionados entre sí deben mantenerse juntos verticalmente__ <span style="color: Maroon">[G10]</span>.
 Esta regla no funciona con conceptos de archivos independientes. Por lo tanto, __no debe separar conceptos relacionados en archivos independientes a menos que tenga un motivo de peso. De hecho, es uno de los motivos por los que se debe evitar el uso de variables protegidas__.
 Para los conceptos relacionados que pertenecen al mismo archivo, su separación vertical debe medir su importancia con respecto a la legibilidad del otro. __Debe evitar que el lector deambule entre archivos y clases__.
+
+### Declaraciones de variables
+
+Las variables deben declararse de la forma más aproximada a su uso. __Como las funciones son muy breves, las variables locales deben aparecer en la parte superior de cada función__, como en este ejemplo de Junit4.3.1.
+
+```java
+    private static void readPreferences() {
+        InputStream is = null;
+        try {
+            is = new FileInputStream(getPreferencesFile());
+            setPreferences(new Properties(getPreferences()));
+            getPreferences().load(is);
+        } catch (IOException e) {
+            try {
+                if (is != null)
+                    is.close();
+            } catch (IOException e1){
+
+            }
+        }
+    }
+```
+
+__Las variables de control de bucles deben declararse en la instrucción del bucle__, como en esta pequeña función del mismo código fuente:
+
+```java
+    public int countTestCases() {
+        int count = 0;
+        for (Test each : tests)
+            count += each.countTestCases();
+        return count;
+    }
+```
+
+__En casos excepcionales, una variable puede declararse en la parte superior de un bloque o antes de un bucle en una función extensa__. Puede ver este tipo de variable en la siguiente función de TestNG.
+
+```java
+    for (XmlTest test : m_suite.getTests()) {
+        TestRunner tr = m_runnerFactory.newTestRunner(this, test);
+        tr.addListener(m_textReporter);
+        m_testRunners.add(tr);
+
+        invoker = tr.getInvoker();
+
+        for (ITestNGMethod m : tr.getBeforeSuiteMethods()) {
+            beforeSuiteMethods.put(m.getMethod(), m);
+        }
+
+        for (ITestNGMethod m : tr.getAfterSuiteMethods()) {
+            afterSuiteMethods.put(m.getMethod(), m);
+        }
+    }
+```

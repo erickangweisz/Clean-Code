@@ -2107,3 +2107,63 @@ Fíjese en el extraño caso de la clase `TestSuite` de JUnit 4.3.1. He atentado 
         }
     }
 ```
+
+### Funciones dependientes
+
+__Si una función invoca otra, deben estar verticalmente próximas, y la función de invocación debe estar por encima de la invocada siempre que sea posible. De este modo el programa fluye con normalidad. Si la convención se sigue de forma fiable, los lectores sabrán que las definiciones de función aparecen después de su uso__. Fíjese en el fragmento de FitNesse del __listado 5.5.__
+La función superior invoca las situadas por debajo que, a su vez, invocan a las siguientes. Esto facilita la detección de las funciones invocadas y mejora considerablemente la legilibilidad del módulo completo.
+
+```java
+    public class WikiPageResponder implements SecureResponder {
+        protected WikiPage page;
+        protected PageData pageData;
+        protected String pageTitle;
+        protected Request request;
+        protected PageCrawler crawler;
+
+        public Response makeResponse(FitNesseContext context, Request request) throws Exception {
+            String pageName = getPageNameOrDefault(request, "FrontPage");
+            loadPage(pageName, context);
+            if (page == null)
+                return notFoundResponse(context, request);
+            else
+                return makePageResponse(context);
+        }
+
+        private String getPageNameOfDefault(Request request, String defaultPageName) {
+            String pageName = request.getResource();
+            if (StringUtil.isBlank(pageName))
+                pageName = defaultPageName;
+            
+            return pageName;
+        }
+
+        protected void loadPage(String resource, FitNesseContext context)
+            throws Exception {
+            WikiPagePath path = PathParser.parse(resource);
+            crawler.setDeadEndStrategy(new VirtualEnabledPageCrawler());
+            page = crawler.getPage(context.root, path);
+            if (page != null)
+                pageData = page.getData();
+        }
+
+        private Response notFoundResponse(FitNesseContext context, Request request)
+            throws Exception {
+            return new NotFoundResponder().makeResponse(context, request);
+        }
+
+        private SimpleResponse makePageResponse(FitNesseContext context)
+            throws Exception {
+            pageTitle = PathParser.render(crawler.getFullPath(page));
+            String html = makeHtml(context);
+
+            SimpleResponse response = new SimpleResponse();
+            response.setMaxAge(0);
+            response.setContent(html);
+            return response;
+        }
+        ...
+    }
+```
+
+Además, este fragmento es un buen ejemplo de ubicación de constantes en un nivel correcto <span style="color: Maroon">[G35]</span>. La constante `FrontPage` se podría haber ocultado en la función `getPageNameOrDefault`, pero eso habria ocultado una constante conocida y esperada en una función de nivel inferior de forma incorrecta. Es mejor pasar la constante desde un punto en el que tiene sentido a la posición en la que realmente se usa.

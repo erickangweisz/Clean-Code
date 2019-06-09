@@ -1967,3 +1967,39 @@ __Listado 5.2.__ BoldWidget.java.
 
 Este efecto aumenta todavía más si no centramos la vista. En el primer ejemplo, los distinos grupos de líneas saltan a la vista, mientras que en el segundo es una mezcla amorfa. La diferencia entre ambos listados en una ligera apertura vertical.
 
+### Densidad vertical
+
+__Si la apertura separa los conceptos, la densidad vertical implica asociaciones. Por tanto, las líneas de código con una relación directa deben aparecer verticalmente densas.__ Fíjese en cómo los comentarios sin sentido del __listado 5.3__ anulan la asociación entre las dos variables de instancia.
+
+__Listado 5.3.__
+```java
+    public class ReporterConfig {
+        /**
+        * Nombre de clase del escuchador
+        */
+        private m_className;
+
+        /**
+        * Propiedades del escuchador
+        */
+        private List<Property> m_properties = new ArrayList<Property>();
+
+        public void addProperty(Property property) {
+            m_properties.add(property);
+        }
+    }
+```
+
+El __listado 5.4__ es mucho más fácil de leer. Lo apreciamos a simple vista o al menos yo lo hago, Al mirarlo, veo que es una clase con dos variables y un método, sin tener que mover la cabeza ni la vista. El listado anterior nos obliga a forzar la vista y a mover la cabeza para alcanzar el mismo nivel de comprensión.
+
+__Listado 5.4.__
+```java
+    public class ReporterConfig {
+        private String m_classNAme;
+        private List<Property> m_properties = new ArrayList<Property>();
+
+        public void addProperty(Property property) {
+            m_properties.add(property);
+        }
+    }
+```

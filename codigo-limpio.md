@@ -1910,3 +1910,60 @@ Piense en un artículo de periódico bien escrito. En la parte superio espera un
 __Un archivo de código debe ser como un artículo de periódico. El nombre debe ser sencillo pero claro. Por sí mismo, debe bastar para indicarnos si estamos o no en el módulo correcto. Los elementos superiores del archivo deben proporcionar conceptos y algoritmos de nivel superior. Los detalles deben aumentar según avanzamos, hasta que en la parte final encontremos las funciones de nivel inferior del archivo__.
 Un periódico se compone de varios artículos, algunos muy reducidos y otros de gran tamaño. No hay muchos que ocupen toda la página con texto, para que el periódico sea manejable. Si el periódico fuera un único y extenso texto con una aglomeración desorganizada de hechos, fechas y nombres, no lo leeríamos.
 
+### Apertura vertical entre conceptos
+
+La práctica totalidad del código se lee de izquierda a derecha y de arriba a abajo. __Cada línea representa una expresión o una cláusula, y cada grupo de líneas representa un prensamiento completo. Estos pensamientos deben separarse mediante líneas en blanco__.
+Fíjese en el __listado 5.1.__ Hay líneas en blanco que separan con un profundo efecto en el diseño visual del código. Cada línea en blanco es una pista visual que identifica un nuevo concepto independiente. Al avanzar por el listado, la vista se fija en la primera línea que aparece tras una línea en blanco.
+
+__Listado 5.1.__ BoldWidget.java.
+```java
+    package fitnesse.wikitext.widgets;
+
+    import java.util.regex.*;
+
+    public class BoldWidget extends ParentWidget {
+        public static final String REGEXP = "'''.+?'''";
+        private static final Pattern pattern = Pattern.compile("'''(.+=?)'''", 
+            Pattern.MULTILINE + Pattern.DOTALL
+        );
+
+        public BoldWidget(ParentWidget parent, String text) throws Exception {
+            super(parent);
+            Matcher match = pattern.matcher(text);
+            match.find();
+            addChildWidgets(match.group(1));
+        }
+
+        public String render() throws Exception {
+            StringBuffer html = new StringBuffer("<b>");
+            html.append(childHtml()).append("</b>");
+            return html.toString();
+        }
+    }
+```
+
+Si eliminamos las líneas en blanco, como en el __listado 5.2__, se oscurece la legibilidad del código.
+
+__Listado 5.2.__ BoldWidget.java.
+```java
+    package fitnesse.wikitext.widgets;
+    import java.util.regex.*;
+    public class BoldWidget extends ParentWidget {
+        public static final String REGEXP = "'''.+?'''";
+        private static final Pattern pattern = Pattern.compile("'''(.+=?)'''", 
+            Pattern.MULTILINE + Pattern.DOTALL);
+        public BoldWidget(ParentWidget parent, String text) throws Exception {
+            super(parent);
+            Matcher match = pattern.matcher(text);
+            match.find();
+            addChildWidgets(match.group(1));}
+        public String render() throws Exception {
+            StringBuffer html = new StringBuffer("<b>");
+            html.append(childHtml()).append("</b>");
+            return html.toString();
+        }
+    }
+```
+
+Este efecto aumenta todavía más si no centramos la vista. En el primer ejemplo, los distinos grupos de líneas saltan a la vista, mientras que en el segundo es una mezcla amorfa. La diferencia entre ambos listados en una ligera apertura vertical.
+

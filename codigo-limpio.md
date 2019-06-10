@@ -1901,7 +1901,7 @@ Comencemos por el tamaño vertical. ¿Qué tamaño debe tener un archivo fuente?
 Se escriben siete proyectos: JUnit, FitNesse, testNG, Time and Money, JDepend, Ant y Tomcat. Las líneas que cruzan los cuadros muestran la longitud máxima y mínima de cada proyecto. El cuadro muestra aproximadamente un tercio (una desviación estandar) de los archivos. La parte central del cuadro es la media. Por tanto, el tamaño de archivo medio del proyecto FitNesse es de 65 líneas y un tercio de los archivos ocupan entre 40 y 100+ líneas.
 El mayor archivo de FitNese tiene una 400 líneas y el de menor tamaño, 6. Es una escala de registro, de modo que la pequeña diferencia de posición vertical supone una gran diferencia en tamaño absoluto.
 
-Junit, FitNesse y Time and Money tienen archivos relativamente pequeños. Ninguno supera las 500 líneas y la mayoría tienen menos de 200. Tomcat y Ant, por su parte, tienen archivos con varios miles de líneas de longitud y más de la mitad superan las 200.
+JUnit, FitNesse y Time and Money tienen archivos relativamente pequeños. Ninguno supera las 500 líneas y la mayoría tienen menos de 200. Tomcat y Ant, por su parte, tienen archivos con varios miles de líneas de longitud y más de la mitad superan las 200.
 __¿Qué significa todo esto? Aparentemente se pueden crear sistemas (FitNesse se aproxima a las 50.000 líneas) a partir de archivos de unas 200 líneas de longitud, con un límite máximo de 500. Aunque no debería ser una regla, es un intervalo aconsejable. Los archivos de pequeño tamaño se entienden mejor que los grandes__.
 
 ### La metáfora del periódico
@@ -2013,7 +2013,7 @@ Para los conceptos relacionados que pertenecen al mismo archivo, su separación 
 
 ### Declaraciones de variables
 
-Las variables deben declararse de la forma más aproximada a su uso. __Como las funciones son muy breves, las variables locales deben aparecer en la parte superior de cada función__, como en este ejemplo de Junit4.3.1.
+Las variables deben declararse de la forma más aproximada a su uso. __Como las funciones son muy breves, las variables locales deben aparecer en la parte superior de cada función__, como en este ejemplo de JUnit4.3.1.
 
 ```java
     private static void readPreferences() {
@@ -2167,3 +2167,32 @@ La función superior invoca las situadas por debajo que, a su vez, invocan a las
 ```
 
 Además, este fragmento es un buen ejemplo de ubicación de constantes en un nivel correcto <span style="color: Maroon">[G35]</span>. La constante `FrontPage` se podría haber ocultado en la función `getPageNameOrDefault`, pero eso habria ocultado una constante conocida y esperada en una función de nivel inferior de forma incorrecta. Es mejor pasar la constante desde un punto en el que tiene sentido a la posición en la que realmente se usa.
+
+### Afinidad conceptual
+
+Determinados conceptos de código deben estar próximos a otros. Tienen una afinidad conceptual concreta. Cuanto mayor sea esta afinidad, menor distancia vertical debe existir entre ellos.
+Como hemos visto, esta afinidad se puede basar en una dependencia directa, como cuando una función invoca a otra, o cuando usa una variable. Pero __hay otras causas de afinidad. Puede generarse porque un grupo de funciones realice una operación similar__.
+Fíjese en ese fragmento de código de JUnit 4.3.1:
+
+```java
+    public class Assert {
+        static public void assertTrue(String message, boolean condition) {
+            if (!condition)
+                fail(message);
+        }
+
+        static pulic void assertTrue(boolean condition) {
+            assertTrue(null, condition);
+        }
+
+        static public void assertFalse(String message, boolean condition) {
+            assertTrue(message, !condition);
+        }
+
+        static public void assertFalse(boolean condition) {
+            assertFalse(null, condition);
+        }
+    }
+```
+
+Estas funciones tienen una elevada afinidad conceptual ya que comparten un sistema de nombres común y realizan variantes de la misma tarea básica. El hecho de que se invoquen unas a otras es secundario. Aunque no lo hicieran, deberían seguir estando próximas entre ellas.

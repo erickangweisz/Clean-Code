@@ -1896,7 +1896,8 @@ Comencemos por el tamaño vertical. ¿Qué tamaño debe tener un archivo fuente?
 ¿Qué tamaño tienen la mayoría de archivos fuente de Java? Existe una amplia gama de tamaños e importantes diferencias de estilo, como se aprecia en la figura 5.1.
 
 > __Figura 5.1.__ Escala LOG de distribuciones de longitud de archivos (altura del cuadro = sigma).
-[ Imagen de gráfico ]
+
+<img align="left" src="pictures/figura_5_1.png" alt="drawing" width="800"/> 
 
 Se escriben siete proyectos: JUnit, FitNesse, testNG, Time and Money, JDepend, Ant y Tomcat. Las líneas que cruzan los cuadros muestran la longitud máxima y mínima de cada proyecto. El cuadro muestra aproximadamente un tercio (una desviación estandar) de los archivos. La parte central del cuadro es la media. Por tanto, el tamaño de archivo medio del proyecto FitNesse es de 65 líneas y un tercio de los archivos ocupan entre 40 y 100+ líneas.
 El mayor archivo de FitNese tiene una 400 líneas y el de menor tamaño, 6. Es una escala de registro, de modo que la pequeña diferencia de posición vertical supone una gran diferencia en tamaño absoluto.
@@ -2201,3 +2202,12 @@ Estas funciones tienen una elevada afinidad conceptual ya que comparten un siste
 
 __Por lo general, las dependencias de invocaciones de funciones debe apuntar hacia abajo. Es decir, la función invocada debe situarse por debajo de la que realice la invocación. Esto genera un agradable flujo en el código fuente, de los niveles superiores a los inferiores__.
 Como sucede en los artículos del periódico, esperamos que los conceptos más importantes aparezcan antes y que se expresen con la menor cantidad de detalles sobrantes. Esperamos que los detalles de nivel inferior sean los últimos. De este modo, podemos ojear los archivos de código y captar el mensaje en las primeras funciones sin necesidad de sumergirnos en los detalles. El __listado 5.5__ se organiza de esta forma. Puede que otros ejemplos mejores sean los listados __15.5__ y __3.7.__
+
+### Formato horizontal
+
+¿Qué ancho debe tener una línea? Para responderlo, fíjese en la anchura de las líneas de un programa convencional. De nuevo, examinamos siete proyectos diferentes. En la __figura 5.2__ puede ver la distribución de longitud de todos ellos. La regularidad es impresionante, en especial en torno a los 45 caracteres. De hecho, los tamaños entre 20 y 60 representan un uno por cien del número total de líneas. ¡Eso es un 40 por 100! Puede que otro 30 por 100 sea menos de 10 caracteres de ancho. Recuerde que es una escala de registro, de modo que la apariencia lineal es muy significativa. __Es evidente que los programadores prefieren líneas menos anchas__.
+
+<img align="left" src="pictures/figura_5_2.png" alt="drawing" width="800"/> 
+
+__Esto sugiere que debemos intentar reducir las líneas de código. El antiguo límite Hollerith de 80 es un tanto arbitrario y no me opongo a líneas que tienen 100 o incluso 120, pero no más__.
+Como norma, no debe tener que desplazarse hacia la derecha. Los monitores modernos son más anchos y los prgramadores noveles pueden reducir la fuente para encajar hasta 200 caracters en la pantalla. No lo haga. __Mi límite personal es de 120__.

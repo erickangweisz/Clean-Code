@@ -2196,3 +2196,8 @@ Fíjese en ese fragmento de código de JUnit 4.3.1:
 ```
 
 Estas funciones tienen una elevada afinidad conceptual ya que comparten un sistema de nombres común y realizan variantes de la misma tarea básica. El hecho de que se invoquen unas a otras es secundario. Aunque no lo hicieran, deberían seguir estando próximas entre ellas.
+
+### Orden vertical
+
+__Por lo general, las dependencias de invocaciones de funciones debe apuntar hacia abajo. Es decir, la función invocada debe situarse por debajo de la que realice la invocación. Esto genera un agradable flujo en el código fuente, de los niveles superiores a los inferiores__.
+Como sucede en los artículos del periódico, esperamos que los conceptos más importantes aparezcan antes y que se expresen con la menor cantidad de detalles sobrantes. Esperamos que los detalles de nivel inferior sean los últimos. De este modo, podemos ojear los archivos de código y captar el mensaje en las primeras funciones sin necesidad de sumergirnos en los detalles. El __listado 5.5__ se organiza de esta forma. Puede que otros ejemplos mejores sean los listados __15.5__ y __3.7.__

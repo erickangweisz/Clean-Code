@@ -2250,3 +2250,60 @@ __Por otra parte, no hemos incluido espacios entre los nombres de las funciones 
 
 Fíjese en lo bien que se leen las ecuaciones. __Los factores carecen de espacios en blanco ya que tienen una mayor precedencia__. Los términos se separan mediante espacios en blanco ya que la suma y la resta son de precedencia inferior.
 __Desafortunadamente, muchas herramientas de formato de código ignoran la precedencia de los operadores e imponen un espacio uniforme. Por ello, separaciones sutiles como las anteriores suelen perderse tras modificar el formato del código__.
+
+### Alineación horizontal
+
+Cuando era programador de lenguajes de ensamblado, usaba la alineación horizontal para acentuar determinadas estructuras. Cuando comencé a programar en C, C++ y Java, seguía intentando alinear los nombres de variables en un conjunto de declaraciones o todos los valores en un grupo de instrucciones de asignación. El aspecto de mi código era el siguiente:
+
+```java
+    public class FitNesseExpediter implements ResponseSender
+    {
+        private     Socket             socket;
+        private     InputStream        input;
+        private     OutputStream       output;
+        private     Request            request;
+        private     Response           response;
+        private     FitNesseContext    context;
+        protected   long               requestParsingTimeLimit;
+        private     long               requestProgress;
+        private     long               requestParsingDeadline;
+        private     boolean            hasError;
+
+        public FitNesseExpediter(Socket s,
+                    FitNesseContext context) throws Exception
+        {
+            this.context =              context;
+            socket =                    s;
+            input =                     s.getInputStream();
+            output =                    s.getOutputStream();
+            requestParsingTimeLimit =   10000;
+        }
+    }
+```
+
+Sin embargo, este tipo de alineación no es útil. Parece enfatizar los elementos incorrectos y aleja la vista de la verdadera intención. Por ejemplo, en la lista anterior de declaraciones, nos vemos tentados a leer la lista de nombres de variables sin fijarnos en sus tipos. Del mismo modo, en la lista de instrucciones de asignación, nos fijamos en los valores sin ver el operador. Para empeorarlo todo, las heramientas automáticas de formato suelen eliminar este tipo de alineación. Por tanto, al final, ya no la uso. Ahora prefiero declaraciones y asignaciones sin alinear, como se muestra a continuación, ya que resalta una deficiencia importante. Si tengo listas extensas que deben alinearse, el problema es la longitud de las listas, no la falta de alineación. La longitud de la siguiente lista de declaraciones de `FitNesseExpediter` sugiere que esta clase debe dividirse.
+
+```java
+    public class FitNesseExpediter implements ResponseSender
+    {
+        private Socket socket;
+        private InputStream input;
+        private OutputStream output;
+        private Request request;
+        private Response response;
+        private FitNesseContext context;
+        protected long requestParsingTimeLimit;
+        private long requestProgress;
+        private long requestParsingDeadline;
+        private boolean hasError;
+
+        public FitNesseExpediter(Socket s, FitNesseContext context) throws Exception
+        {
+            this.context = context;
+            socket = s;
+            input = s.getInputStream();
+            output = s.getOutputStream();
+            requestParsingTimeLimit = 10000;
+        }
+    }
+```

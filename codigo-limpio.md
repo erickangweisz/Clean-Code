@@ -1897,7 +1897,7 @@ Comencemos por el tamaño vertical. ¿Qué tamaño debe tener un archivo fuente?
 
 > __Figura 5.1.__ Escala LOG de distribuciones de longitud de archivos (altura del cuadro = sigma).
 
-<img align="left" src="pictures/figura_5_1.png" alt="drawing" width="800"/> 
+<img align="left" src="pictures/figura_5_1.png" alt="drawing" width="1250"/> 
 
 Se escriben siete proyectos: JUnit, FitNesse, testNG, Time and Money, JDepend, Ant y Tomcat. Las líneas que cruzan los cuadros muestran la longitud máxima y mínima de cada proyecto. El cuadro muestra aproximadamente un tercio (una desviación estandar) de los archivos. La parte central del cuadro es la media. Por tanto, el tamaño de archivo medio del proyecto FitNesse es de 65 líneas y un tercio de los archivos ocupan entre 40 y 100+ líneas.
 El mayor archivo de FitNese tiene una 400 líneas y el de menor tamaño, 6. Es una escala de registro, de modo que la pequeña diferencia de posición vertical supone una gran diferencia en tamaño absoluto.
@@ -2207,7 +2207,46 @@ Como sucede en los artículos del periódico, esperamos que los conceptos más i
 
 ¿Qué ancho debe tener una línea? Para responderlo, fíjese en la anchura de las líneas de un programa convencional. De nuevo, examinamos siete proyectos diferentes. En la __figura 5.2__ puede ver la distribución de longitud de todos ellos. La regularidad es impresionante, en especial en torno a los 45 caracteres. De hecho, los tamaños entre 20 y 60 representan un uno por cien del número total de líneas. ¡Eso es un 40 por 100! Puede que otro 30 por 100 sea menos de 10 caracteres de ancho. Recuerde que es una escala de registro, de modo que la apariencia lineal es muy significativa. __Es evidente que los programadores prefieren líneas menos anchas__.
 
-<img align="left" src="pictures/figura_5_2.png" alt="drawing" width="800"/> 
+<img align="left" src="pictures/figura_5_2.png" alt="drawing" width="1250"/> 
 
 __Esto sugiere que debemos intentar reducir las líneas de código. El antiguo límite Hollerith de 80 es un tanto arbitrario y no me opongo a líneas que tienen 100 o incluso 120, pero no más__.
 Como norma, no debe tener que desplazarse hacia la derecha. Los monitores modernos son más anchos y los prgramadores noveles pueden reducir la fuente para encajar hasta 200 caracters en la pantalla. No lo haga. __Mi límite personal es de 120__.
+
+### Apertura y densidad horizontal
+
+Usamos el espacio en blanco horizontal para asociar elementos directamente relacionados y separar otros con una relación menos estrecha. Fíjese en la siguiente función:
+
+```java
+    private void measureLine(String line) {
+        lineCount++;
+        int lineSize = line.length();
+        totalChars += lineSize;
+        lineWidthHistogram.addLine(lineSize, lineCount);
+        recordWidestLine(lineSize);
+    }
+```
+
+__Hemos rodeado los operadores de asignación con espacios en blanco para destacarlos__.
+Las instrucciones de asignación tiene dos elementos principales: el lazo izquierdo y el derecho. __Los espacios acentúan esta separación__.
+__Por otra parte, no hemos incluido espacios entre los nombres de las funciones y el paréntesis de apertura, ya que la función y sus argumentos están estrechamente relacionados. Su separación los desconectaría. Separo los argumentos en los paréntesis de invocación de la función para acentuar la coma e indicar que los argumentos son independientes. El espacio en blanco también se usa para acentuar la precedencia de los operadores__:
+
+```java
+    public class Quadratic {
+        public static double rootl(double a, double b, double c) {
+            double determinant = determinant(a, b, c);
+            return (-b + Math.sqrt(determinant)) / (2*a);
+        }
+
+        public static double root2(int a, int b, int c) {
+            double determinant = determinant(a, b, c);
+            return (-b - Math.sqrt(determinant)) / (2*a);
+        }
+
+        private static double determinant(double a, double b, double c) {
+            return b*b - 4*a*c;
+        }
+    }
+```
+
+Fíjese en lo bien que se leen las ecuaciones. __Los factores carecen de espacios en blanco ya que tienen una mayor precedencia__. Los términos se separan mediante espacios en blanco ya que la suma y la resta son de precedencia inferior.
+__Desafortunadamente, muchas herramientas de formato de código ignoran la precedencia de los operadores e imponen un espacio uniforme. Por ello, separaciones sutiles como las anteriores suelen perderse tras modificar el formato del código__.

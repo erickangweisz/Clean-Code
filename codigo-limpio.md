@@ -2307,3 +2307,37 @@ Sin embargo, este tipo de alineación no es útil. Parece enfatizar los elemento
         }
     }
 ```
+
+### Sangrado
+
+Un archivo de código es un jerarquía más que un contorno. Incluye información que pertenece a la totalidad del archivo, a sus clases individuales, a los métodos de las clases, a los bloques de los métodos y a los bloques de los bloques. Cada nivel de esta jerarquía es un ámbito en el que se pueden declarar nombres y en el que se inperpretan declaraciones e instrucciones ejecutables.
+Para que esta jerarquía de ámbitos sea visible, sangramos las líneas de código fuente de acuerdo a su posición en la jerarquía. Las instrucciones al nivel del archivo, como las declaraciones de clases, no se sangran. Los métodos de una clase se sangran a un nivel a la derecha de la clase. Las implementaciones de dichs métodos se implementan un nivel a la derecha de su bloque contenedor así sucesivamente.
+Los programadores dependen de este sistema de sangrado. Alinean visualmente las líneas a la izquierda para ver el ámbito al que pertenece. De este modo pueden acceder rápidamente a los ámbitos, como por ejemplo a implementaciones de instrucciones `if` o `while`, que no son relevantes para la situación actual. Buscan en la izquierda nuevas declaraciones de métodos, variables e incluso clases. Sin el sangrado, los programas seria prácticamente ilegibles.
+Fíjese en los siguientes programas, sintáctica y semánticamente idóneos:
+
+```java
+    public class FitNesseServer implements SocketServer {
+        private FitNesseContext context;
+
+        public FitNesseServer(FitNesseContext context) {
+            this.context = context;
+        }
+
+        public void serve(Socker s) {
+            serve(s, 10000);
+        }
+
+        public void serve(Socket s, long requestTimeout) {
+            try {
+                FitNesseExpediter sender = new FitNesseExpediter(s, context);
+                sender.setRequestParsingTimeLimit(requestTimeout);
+                sender.start();
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+```
+
+A la vista puede incluso apreciar la estructura del archivo sangrado. Detectamos inmediatamente las variables, constructores y métodos de acceso. En cuestión de segundos vemos que es una especie de interfaz de conexión, con un tiempo de espera. La versión sin sangrar, por su parte, es prácticamente impenetrable.

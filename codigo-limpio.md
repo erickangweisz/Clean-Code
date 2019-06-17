@@ -2341,3 +2341,34 @@ Fíjese en los siguientes programas, sintáctica y semánticamente idóneos:
 ```
 
 A la vista puede incluso apreciar la estructura del archivo sangrado. Detectamos inmediatamente las variables, constructores y métodos de acceso. En cuestión de segundos vemos que es una especie de interfaz de conexión, con un tiempo de espera. La versión sin sangrar, por su parte, es prácticamente impenetrable.
+
+### Romper el sangrado
+
+En ocasiones tenemos la tentación de romper la regla de sangrado con instrucciones `if` breves, bucles `while` breves o funciones breves. Siempre que he sucumbido a esta tentación, he acabado por volver a aplicar el sangrado. Por ello, evito replegar ámbitos a una línea, como en este ejemplo:
+
+```java
+    public class CommentWidget extends TextWidget
+    {
+        public static final String REGEXP = "^#[^\r\n]*(?:(?:\r\n)|\n|\r)?";
+
+        public CommentWidget(ParentWidget parent, String text) { super(parent, text) }
+        public String render() throws Exception { return ""; }
+    }
+```
+
+__Prefiero desplegar y sangrar los ámbitos__:
+
+```java
+    public class CommentWidget extends TextWidget
+    {
+        public static final String REGEXP = "^#[^\r\n]*(?:(?:\r\n)|\n|\r)?";
+
+        public CommentWidget(ParentWidget parent, String text) {
+            super(parent, text);
+        }
+
+        public String render() throws Exception {
+            return "";
+        }
+    }
+```

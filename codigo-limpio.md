@@ -2372,3 +2372,11 @@ __Prefiero desplegar y sangrar los ámbitos__:
         }
     }
 ```
+
+### Ámbitos ficticios
+
+En ocasiones, el cuerpo de una instrucción `while` o `for` es ficticio, como se muestra a continuación. No me gustan estas estructuras y prefiero evitarlas. En caso de no poder hacerlo, me aseguro de sangrar el cuerpo ficticio y de incluirlo entre paréntesis. No sabría decir cuántas veces me ha engañado un punto y coma situado al fnial de un bucle `while` en la misma línea. A menos que lo haga visible y lo sangre en una línea propia, es difícil de ver.
+
+```java
+    while (dis.read(buf, 0, readBufferSize) != -1)
+```

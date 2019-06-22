@@ -2386,3 +2386,102 @@ __Todo programador tiene sus reglas de formato preferidas, pero si forma parte d
 Un equipo de programadores debe acordar un único estilo de formato y todos los integrantes del equipo deben aplicarlo. __El objetivo es que el software tenga un estilo coherente. No queremos que parezca escrito por individuos enfrentados__.
 Cuando comencé el proyecto FitNesse en 2002, me reuní con el equipo para definir un estilo de código. Tardamos 10 minutos. Decidimos dónde añadir las llaves, qué tamaño de sangrado utilizar, los nombres de las clases, variables y métodos, y demás. Tras ello, codificamos las reglas en el IDE y las cumplimos desde entonces. No son las reglas que prefiero, son las que el equipo decidió. Y como miembro de ese equipo, las apliqué cuando creamos el código del proyecto FitNesse.
 __Recuerde que un buen sistema de software se compone de una serie de documentos que se leen fácilmente__. Deben tener un estilo coherente y dinámico. El lector debe confiar en que se leen fácilmente. Deben tener un estilo y dinámico. El lector debe confiar en que los formatos que ve en nuestro archivo de código significarán lo mismo para otros. __Lo último que queremos es aumentar la complejidad del código creando una mezcla de estilos diferentes__.
+
+### Reglas de formato de Uncle Bob
+
+Las reglas que uso personalmente son sencillas y se ilustran en el código del __listado 5.6.__ Considérelo un ejemplo de documento estándar de código óptimo.
+
+> __Listado 5.6.__ CodeAnalyzer.java.
+
+```java
+    public class CodeAnalyzer implements JavaFileAnalysis {
+        private int lineCount;
+        private int maxLineWidth;
+        private int widesLineNumber;
+        private LineWidthHistogram lineWidthHistogram;
+        private int totalChars;
+
+        public CodeAnalyzer() {
+            lineWidthHistogram = new LineWidthHistogram();
+        }
+
+        public static List<File> findJavaFiles(File parentDirectory) {
+            List<File> files = new ArrayList<File>();
+            findJavaFiles(parentDirectory, files);
+            return files;
+        }
+
+        private static void findJavaFiles(File parentDirectory, List<File> files) {
+            for (File file : parentDirectory.listFiles()) {
+                if (file.getName().endsWidth(".java"))
+                    files.add(file);
+                else if (file.isDirectory())
+                    findJavaFiles(file, files);
+            }
+        }
+
+        public void analyzeFile(File javaFile) throws Exception {
+            BufferedReader br = new BufferedReader(new FileReader(javaFile));
+            String line;
+            while ((line = br.readLine()) != null)
+                measureLine(line);
+        }
+
+        private void measureLine(String line) {
+            lineCount++;
+            int lineSize = line.length();
+            totalChars += lineSize;
+            lineWidthHistogram.addLine(lineSize, lineCount);
+            recordWidesLine(lineSize);
+        }
+
+        private void recordWidesLine(int lineSize) {
+            if (lineSize > maxLineWidth) {
+                maxLineWidth = lineSize;
+                widestLineNumber = lineCount;
+            }
+        }
+
+        public int getLineCount() {
+            return lineCount;
+        }
+
+        public int getMaxLineWidth() {
+            return maxLineWidth;
+        }
+
+        public int getWidestLineNumber() {
+            return widestLineNumber;
+        }
+
+        public LineWidthHistogram getLineWidthHistogram() {
+            return lineWidthHistogram;
+        }
+
+        public double getMeanLineWidth() {
+            return (double)totalChars/lineCount;
+        }
+
+        public int getMedianLineWidth() {
+            Integer[] sortedWidths = getSortedWidths();
+            int cumulativeLineCount = 0;
+            for (int width : sortedWidths) {
+                cumulativeLineCount += lineCountForWidth(width);
+                if (cumulativeLineCount > lineCount/2)
+                    return width;
+            }
+            throw new Error("Cannot get here");
+        }
+
+        private int lineCountForWidth(int width) {
+            return lineWidthHistogram.getLinesForWidth(width).size();
+        }
+
+        private Integer[] getSortedWitdhs() {
+            Set<Integer> widths = lineWidthHistogram.getWidths();
+            Integer[] sortedWidths = (widths.toArray(new Integer[0]));
+            Arrays.sort(sortedWidths);
+            return sortedWidths;
+        }
+    }
+```

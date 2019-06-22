@@ -2380,3 +2380,9 @@ En ocasiones, el cuerpo de una instrucción `while` o `for` es ficticio, como se
 ```java
     while (dis.read(buf, 0, readBufferSize) != -1)
 ```
+### Reglas de equipo
+
+__Todo programador tiene sus reglas de formato preferidas, pero si forma parte de un equipo, el equipo manda__.
+Un equipo de programadores debe acordar un único estilo de formato y todos los integrantes del equipo deben aplicarlo. __El objetivo es que el software tenga un estilo coherente. No queremos que parezca escrito por individuos enfrentados__.
+Cuando comencé el proyecto FitNesse en 2002, me reuní con el equipo para definir un estilo de código. Tardamos 10 minutos. Decidimos dónde añadir las llaves, qué tamaño de sangrado utilizar, los nombres de las clases, variables y métodos, y demás. Tras ello, codificamos las reglas en el IDE y las cumplimos desde entonces. No son las reglas que prefiero, son las que el equipo decidió. Y como miembro de ese equipo, las apliqué cuando creamos el código del proyecto FitNesse.
+__Recuerde que un buen sistema de software se compone de una serie de documentos que se leen fácilmente__. Deben tener un estilo coherente y dinámico. El lector debe confiar en que se leen fácilmente. Deben tener un estilo y dinámico. El lector debe confiar en que los formatos que ve en nuestro archivo de código significarán lo mismo para otros. __Lo último que queremos es aumentar la complejidad del código creando una mezcla de estilos diferentes__.

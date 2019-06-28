@@ -2485,3 +2485,9 @@ Las reglas que uso personalmente son sencillas y se ilustran en el código del _
         }
     }
 ```
+
+## <span style="color: darkcyan">6. Objetos y estructuras de datos</span>
+
+__Hay una razón para que las variables sean privadas. No queremos que nadie más dependa de ellas. Queremos poder cambiar su tipo o implementación cuando deseemos__.
+Entonces, __¿por qué tantos programadores añaden automáticamente métodos de establecimiento y recuperación que muestran sus variables privadas como si fueran públicas?__
+

@@ -2491,3 +2491,54 @@ Las reglas que uso personalmente son sencillas y se ilustran en el código del _
 __Hay una razón para que las variables sean privadas. No queremos que nadie más dependa de ellas. Queremos poder cambiar su tipo o implementación cuando deseemos__.
 Entonces, __¿por qué tantos programadores añaden automáticamente métodos de establecimiento y recuperación que muestran sus variables privadas como si fueran públicas?__
 
+### Abstracción de datos
+
+Fíjese en la diferencia entre los __listados 6.1__ y __6.2__. Ambos representan los datos de punto cartesiano, pero uno muestra su implementación y otro la oculta totalmente.
+
+> __Listado 6.1.__ Punto concreto.
+
+```java
+    public class Point {
+        public double x;
+        public double y;
+    }
+```
+
+> __Listado 6.2.__ Punto abstracto.
+
+```java
+    public interface Point {
+        double getX();
+        double getY();
+        void setCartesian(double x, double y);
+        double getR();
+        double getTheta();
+        void setPolar(double r, double theta);
+    }
+```
+
+Lo mejor del __listado 6.2.__ es que no hay forma de saber si la implementación está en coordenadas rectangulares o polares. ¡Puede que en ninguna! Y aún así la interfaz representa sin lugar a dudas una estructura de datos.
+Pero __representa algo más que una estructura de datos. Los métodos refuerzan una política de acceso__. Puede leer las coordenadas de forma independiente pero debe establecerlas de forma conjunta como operación atómica.
+El __listado 6.1__, por su parte, se implementa claramente en coordenadas rectangulares y nos obliga a manipularlas de forma independientes, lo que muestra la implementación. De hecho, la mostraría igualmente aunque las variables fueran privadas y usáramos métodos variables de establecimiento y recuperación. __Para ocultar la implementación no basta con añadir una capa de funciones entre las variables. Se basa en la abstracción__.
+__Una clase no fuerza sus variables a través de métodos de establecimiento y recuperación__. Por el contrario, __MUESTRA INTERFACES ABSTRACTAS QUE PERMITEN A SUS USUARIOS MANIPULAR LA ESENCIA DE LOS DATOS SIN NECESIDAD DE CONOCER SU IMPLEMENTACIÓN__.
+Fíjese en los __listados 6.3.__ y __6.4__. El primero usa términos concretos para indicar el nivel de combustible de un vehiculo mientras que el segundo lo hace con la abstracción del porcentaje. En el caso concreto, podemos estar seguros de que se trata de métodos de acceso de variables. En el caso abstracto, desconocemos la forma de los datos.
+
+> __Listado 6.3.__ Vehiculo concreto.
+
+```java
+    public interface Vehicle {
+        double getFuelTankCapacityInGallons();
+        double getGallonsOfGasoline();
+    }
+```
+
+> __Listado 6.4.__ Vehiculo abstracto.
+
+```java
+    public interface Vehicle {
+        double getPercentFuelRemaining();
+    }
+```
+
+__En ambos casos, la segunda opción es preferible. NO QUEREMOS MOSTRAR LOS DETALLES DE LOS DATOS, SINO EXPRESARLOS EN TÉRMINOS ABSTRACTOS__. __Esto no se consigue simplemente mediante interfaces o métodos de establecimiento y recuperación. Hay que meditar seriamente la forma óptima de representar los datos que contiene un objeto__. __La peor opción es añadir métodos de establecimiento y recuperación a ciegas__.
+

@@ -2674,3 +2674,7 @@ El uso de funciones de acceso complica el problema. Si el código se hubiera esc
 
 __El problema sería menos confuso si las estructuras de datos tuvieran variables públicas y no funciones, y los objetos tuvieran variables privadas y funciones públicas__. Sin embargo, existen estructuras y estándares (como los bean) que exigen que incluso una sencilla estructura de datos tenga elementos de acceso y mutación.
 
+### Híbridos
+
+Esta confusión genera ocasionalmente desafortunadas estructuras híbridas mitad objeto y mitad estructura de datos. Tienen funciones que realizan tareas significativas y también variables públicas o método públicos de acceso y mutación que hacen que las variables de la misma forma que un programa por procedimientos usaría una estructura de datos. Estos híbridos dificultan la inclusión de nuevas funciones y también de nuevas estructuras de datos. __Son lo peor de ambos mundos. Evítelos__. Indican un diseño descuidado cuyos autores dudan, o peor todavía, desconocen, si necesitan protegerse de funciones o tipos.
+

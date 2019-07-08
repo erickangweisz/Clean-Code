@@ -2542,3 +2542,97 @@ Fíjese en los __listados 6.3.__ y __6.4__. El primero usa términos concretos p
 
 __En ambos casos, la segunda opción es preferible. NO QUEREMOS MOSTRAR LOS DETALLES DE LOS DATOS, SINO EXPRESARLOS EN TÉRMINOS ABSTRACTOS__. __Esto no se consigue simplemente mediante interfaces o métodos de establecimiento y recuperación. Hay que meditar seriamente la forma óptima de representar los datos que contiene un objeto__. __La peor opción es añadir métodos de establecimiento y recuperación a ciegas__.
 
+### Antisimetría de datos y objetos
+
+Estos dos ejemplos ilustran la diferencia entre objetos y estructuras de datos. __Los objetos ocultan sus datos tras abstracciones y muestran funciones que operan en dichos datos. La estructura de datos muestra sus datos y carece de funciones con significado__.
+__Vuelva a leerlos. Fíjese en la naturaleza complementaria de las dos definiciones. Son virtualmente opuestas. Puede parecer una diferencia menor, pero tiene importantes implicaciones__.
+Fíjese en el ejemplo del __listado 6.5__. La clase `Geometry` opera en las tres clases de formas, que son sencillas estructuras de datos sin comportamiento. Todo el comportamiento se encuentra en la clase Geometry.
+
+> __Listado 6.5.__ Forma mediante procedimientos.
+
+```java
+    public class Square {
+        public Point topLeft;
+        public double side;
+    }
+
+    public class Rectangle {
+        public Point topLeft;
+        public double height;
+    }
+
+    public class Circle {
+        public Point center;
+        public double radius;
+    }
+
+    public class Geometry {
+        public final double PI = 3.141592653589793;
+
+        public double area(Object shape) throws NoSuchShapeException
+        {
+            if (shape instanceof Square) {
+                Square s = (Square)shape;
+                return s.side * s.side;
+            }
+            else if (shape instanceof Rectangle) {
+                Rectangle r = (Rectangle)shape;
+                return s.side * s.side;
+            }
+            else if (shape instanceof Circle) {
+                Circle c = (Circle)shape;
+                return PI * c.radius * c.radius;
+            }
+            throw new NoSuchShapeException();
+        }
+    }
+```
+
+Los programadores orientados a objetos se quejarán de que es un ejemplo de procedimiento, y tienen razón. __Imagine qué pasaría si añadimos la función `perimeter()` a `Geometry`. ¡Las clases de formas no se verían afectadas!¡Y las demás clases dependieran de las formas tampoco!__ __Por otra parte, si añado una nueva forma, tendría que cambiar todas las funciones de `Geometry`.__ Vuélvelo a leer. Comprobará que las dos condiciones son diametralmente opuestas.
+
+Fíjese ahora en la solución orientada a objetos del __listado 6.6.__ Aquí, el método `area()` es polimórfico. No se necesita una clase `Geometry`. Por tanto, si añado una nueva forma, ninguna de las funciones existentes se ven afectadas, pero si añado otra función, habrá que cambiar todas las formas.
+
+> __Listado 6.6.__ Formas polimórficas.
+
+```java
+    public class Square implements Shape {
+        private Point topLeft;
+        private double side;
+
+        public double area() {
+            return side*side;
+        }
+    }
+
+    public class Rectangle implements Shape {
+        private Poit topLeft;
+        private double height;
+        private double width;
+
+        public double area() {
+            return height * width;
+        }
+    }
+
+    public class Circle implements Shape {
+        private Point center;
+        private double radius;
+        public final dpuble PI = 3.141592653589793;
+
+        public double area() {
+            return PI * radius * radius;
+        }
+    }
+```
+
+De nuevo, __vemos la naturaleza complementaria de estas dos definiciones: totalmente contrarias. Esto ilustra la dicotomía fundamental entre objetos y estructuras de datos__:
+
+_El código por procedimientos (el que usa estructuras de datos) facilita la inclusión de nuevas funciones sin modificar las estructuras de datos existentes. El código orientado a objetos, por su parte, facilita la inclusión de nuevas clases sin cambiar las funciones existentes._
+
+El complemento también es cierto:
+
+_El código por procedimientos dificulta la inclusión de nuevas estructuras de datos ya que es necesario cambiar todas las funciones. El código orientado a objetos dificulta la inclusión de nuevas funciones ya que es necesario cambiar todas las clases._
+
+Por tanto, lo que es difícil para la programación orientada a objetos es fácil para los procedimientos, y viseversa.
+__En cualquier sistema complejo habrá ocasiones en las que queramos añadir nuevos tipos de datos en lugar de nuevas funciones__. En dichos caso, los objetos y la programación orientada a objetos es lo más adecuado. Por otra parte, en ocasiones tendremos que añadir nuevas funciones en lugar de tipos de datos, para lo que resulta más adecuado usar código por procedimientos y estructuras de datos.
+Los programadores experimentados saben que la idea de que todo es un objeto es un mito. __En ocasiones solamente queremos sencillas estructuras de datos con procedimientos que operen en las mismas__.

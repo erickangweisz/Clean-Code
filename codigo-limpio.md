@@ -2636,3 +2636,21 @@ _El código por procedimientos dificulta la inclusión de nuevas estructuras de 
 Por tanto, lo que es difícil para la programación orientada a objetos es fácil para los procedimientos, y viseversa.
 __En cualquier sistema complejo habrá ocasiones en las que queramos añadir nuevos tipos de datos en lugar de nuevas funciones__. En dichos caso, los objetos y la programación orientada a objetos es lo más adecuado. Por otra parte, en ocasiones tendremos que añadir nuevas funciones en lugar de tipos de datos, para lo que resulta más adecuado usar código por procedimientos y estructuras de datos.
 Los programadores experimentados saben que la idea de que todo es un objeto es un mito. __En ocasiones solamente queremos sencillas estructuras de datos con procedimientos que operen en las mismas__.
+
+### La ley de Demeter
+
+Existe una conocida heurística denominada __Ley de Demeter__ que afirma que __un módulo no debe conocer los entresijos de los objetos que manipula__. Como vimos en el apartado anterior, __los objetos ocultan sus datos y muestran operaciones, lo que significa que un objeto no debe mostrar su estructura interna a través de métodos de acceso__ ya que si lo hace, mostraría, no ocultaría, su estructura interna.
+En concreto, la ley de Demeter afirma que un método `f` de una clase `C` solo debe invocar los métodos de:
+
+- C.
+- Un objeto creado por ´f´.
+- Un objeto pasado como argumento a `f`.
+- Un objeto en una variable de instancia de `C`.
+
+El método no debe invocar métodos de objetos por ninguna de las funciones permitidas. Es decir __no hable con desconocidos, solo con amigos__.
+El siguiente código parece incumplir la Ley de Demeter (entre otras cosas) ya que invoca la función `getScratchDir()` en el valor devuelto de `getOptions()` y después invoca `getAbsolutePath()` en el valor devuelto de `getScratchDir()`.
+
+```java
+    final String outputDir = ctxt.getOptions().getScratchDir().getAbsolutePath();
+```
+

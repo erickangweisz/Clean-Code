@@ -2654,3 +2654,23 @@ El siguiente código parece incumplir la Ley de Demeter (entre otras cosas) ya q
     final String outputDir = ctxt.getOptions().getScratchDir().getAbsolutePath();
 ```
 
+### Choque de trenes
+
+Ese tipo de código suele denominarse choque de trenes ya que se asemeja a una grupo de vagones de tren. Estas cadenas de invocaciones suelen considerarse un estilo descuidado y deben evitarse <span style="color: Maroon">[G36]</span>. Conviene dividirlas de esta forma:
+
+```java
+    Options opts = ctxt.getOptions();
+    File scratchDir = opts.getScratchDir();
+    final String outputDir = scratchDir.getAbsolutePath();
+```
+
+¿Incumplen estos dos fragmentos de código de Ley de Demeter? Sin duda el módulo contenedor sabe que el objeto `ctxt` contiene opciones, que contienen un directorio `scratch`, que tiene una ruta absoluta. __La función sabe demasiado__. La función que realiza la invocación sabe cómo desplazarse por numerosos objetos diferentes.
+Si incumple o no la Ley de Demeter depende de si `ctxt`, `Options` y `ScratchDir` son objetos o estructuras de datos. Si son objetos, debería ocultarse su estructura interna, no mostrarse, y conocer sus detalles internos sería un claro incumplimiento de la Ley de Demeter. Por otra parte, si `ctxt`, `Options` y `ScratchDir` son simples estructuras de datos, mostrarán su estructura interna con naturalidad y la Ley de Demeter no se aplica.
+El uso de funciones de acceso complica el problema. Si el código se hubiera escrito de esta otra forma, probablemente no nos preocuparíamos de si se incumple la Ley de Demeter o no.
+
+```java
+    final String outputDir = ctxt.options.scratchDir.absolutePath;
+```
+
+__El problema sería menos confuso si las estructuras de datos tuvieran variables públicas y no funciones, y los objetos tuvieran variables privadas y funciones públicas__. Sin embargo, existen estructuras y estándares (como los bean) que exigen que incluso una sencilla estructura de datos tenga elementos de acceso y mutación.
+

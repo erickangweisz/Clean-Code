@@ -2751,3 +2751,9 @@ __La quintaesencia de una estructura de datos es una clase con variables públic
             }
     }
 ```
+
+### Registro activo
+
+__Los registros activos son una forma especial de OTD. Son estructuras de datos con variables públicas (o de acceso por bean) pero suelen tener métodos de navegación como `save` y `find`__. __Por lo general, estos registros activos son traducciones directas de tablas de bases de datos u otros orígenes de datos__. Desafortunadamente, muchos programadores intentan procesar estas estructuras de datos como si fueran objetos y les añaden métodos de reglas empresariales. Es algo extraño ya que crea un hibrido entre una estructura de datos y un objeto.
+__La solución, evidentemente, consiste en considerar al registro activo una estructura de datos y crear objetos independientes que contengan las reglas empresariales y que oculten sus datos internos__ (que probablemente sean instancias del propio registro activo).
+

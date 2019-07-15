@@ -2678,3 +2678,30 @@ __El problema sería menos confuso si las estructuras de datos tuvieran variable
 
 Esta confusión genera ocasionalmente desafortunadas estructuras híbridas mitad objeto y mitad estructura de datos. Tienen funciones que realizan tareas significativas y también variables públicas o método públicos de acceso y mutación que hacen que las variables de la misma forma que un programa por procedimientos usaría una estructura de datos. Estos híbridos dificultan la inclusión de nuevas funciones y también de nuevas estructuras de datos. __Son lo peor de ambos mundos. Evítelos__. Indican un diseño descuidado cuyos autores dudan, o peor todavía, desconocen, si necesitan protegerse de funciones o tipos.
 
+### Ocultar la estructura
+
+¿Qué pasaría si `ctxt`, `options` y `scratchDir` fueran objetos con un comportamiento real? __Como los objetos deben ocultar su estructura interna, no podríamos desplazarnos por los mismos__. Entonces, ¿cómo obtendríamos la ruta absoluta del directorio `scratch`?
+
+`ctxt.getAbsolutePathOfScratchDirectoryOption();`
+
+o
+
+`ctxt.getScratchDirectoryOptions().getAbsulutePath();`
+
+La primera opción provocaría una explosión de métodos en el objeto `ctxt`. La segunda asume que `getScratchDirectoryOption()` devuelve una estructura de datos, no un objeto. Ninguna de las opciones parece correcta. __Si `ctxt` es un objeto, deberíamos indicarle que hiciera algo, no preguntar sobre sus detalles internos__. Entonces, ¿para qué queremos la ruta absoluta del directorio `scratch`? ¿Cómo vamos a usarla? Fíjese en este código del mismo módulo (muchas líneas después):
+
+```java
+    String outFile = outputDir + "/" + className.replace('.', '/') + ".class";
+    FileOutputStream fout = new FileOutputStream(outFile);
+    BufferedOutputStream bos = new BufferedOutputStream(fout);
+```
+
+__La mezcla de distintos niveles de detalle <span style="color: Maroon">[G34][G6]</span> es preocupante__. Puntos, guiones, extensiones de archivo y objetos `File` no deben mezclarse de esta forma, junto al código contenedor. Si lo ignoramos, vemos que la intención de obtener la ruta absoluta del directorio `scratch` es crear un archivo de borrador de un nombre concreto.
+¿Y si le dijéramos al objeto `ctxt` que hiciera esto?
+
+```java
+    BufferedOutputStream bos = ctxt.createScratchFileStream(classFileName);
+```
+
+Parece algo razonable para un objeto. __Permite a `ctxt` ocultar sus detalles internos e impide que la función actual incumpla la Ley de Demeter y se desplace por los objetos que no debería conocer__.
+

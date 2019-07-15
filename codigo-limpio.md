@@ -2705,3 +2705,49 @@ __La mezcla de distintos niveles de detalle <span style="color: Maroon">[G34][G6
 
 Parece algo razonable para un objeto. __Permite a `ctxt` ocultar sus detalles internos e impide que la función actual incumpla la Ley de Demeter y se desplace por los objetos que no debería conocer__.
 
+### Objetos de transferencia de datos
+
+__La quintaesencia de una estructura de datos es una clase con variables públicas y sin funciones. En ocasiones se denomina Objeto de transferencia de datos (Data Transfer Object u OTD). Los OTD son estructuras muy útiles, en especial para comunicarse con bases de datos o analizar mensajes de conexiones, etc__. Suelen ser los primeros de una serie de fases de traducción que convierten datos sin procesar en objetos en el código de la aplicación. Más común es la forma de bean mostrada en el __listado 6.7.__ Los bean tienen variables privadas manipuladas por métodos de establecimiento y recuperación. La cuasi-Encapsulación de bean hace que algunos puristas de la programación orientada a objetos se sientan mejor pero no ofrece ningún otro beneficio.
+
+```java
+    public class Address {
+        private String street;
+        private String streetExtra;
+        private String city;
+        private String state;
+        private String zip;
+
+        public Address(String street, String streetExtra,
+            String city, String state, String zip) {
+                this.street = street;
+                this.streetExtra = streetExtra;
+                this.city = city;
+                this.state = state;
+                this.zip = zip;
+            }
+
+            public String getStreet() {
+                return street;
+            }
+
+            public String getStreetExtra() {
+                return streetExtra;
+            }
+
+            public String getCity() {
+                return street;
+            }
+
+            public String getState() {
+                return state;
+            }
+
+            public String getZip() {
+                return street;
+            }
+
+            public String getZip() {
+                return zip;
+            }
+    }
+```

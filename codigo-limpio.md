@@ -2067,7 +2067,7 @@ __En casos excepcionales, una variable puede declararse en la parte superior de 
 
 ### Variables de instancia
 
-__Las variables de instancia, por su parte, deben declararse en la parte superior de la clase__. Esto no debe aumentar la distancia vertical de las variables, ya que en una clase bien diseñada se usan en muchos sino en todos sus métodos.
+__Las variables de instancia, por su parte, deben declararse en la parte superior de la clase__. Esto no debe aumentar la distancia vertical de las variables, ya que en una clase bien diseñada se usan en muchos sino en todos sus m��todos.
 Existen discrepancias sobre la ubicación de las variables de instancia. En C++ suele aplicarse la denominada regla de las tijeras, que sitúa todas las variables de instancia en un punto conocido para que todo el mundo sepa dónde buscarlas.
 Fíjese en el extraño caso de la clase `TestSuite` de JUnit 4.3.1. He atentado considerablemente esta clase para ilustrar este concepto. Si se fija en la mitad del listado, verás dos variables de instancia declaradas. Resultaría complicado ocultarlas en un punto mejor. Cualquiera que lea este código tendría que toparse con las declaraciones por casualidad (como me pasó a mí)
 
@@ -2762,3 +2762,9 @@ __La solución, evidentemente, consiste en considerar al registro activo una est
 __Los objetos muestran comportamiento y ocultan datos. Esto facilita la inclusión de nuevos tipos de objetos sin necesidad de cambiar los comportamientos existentes. También dificulta la inclusión de nuevos comportamientos en objetos existentes__. __Las estructuras de datos muestran datos y carecen de comportamiento significativo. Esto facilita la inclusión de nuevos comportamientos en las estructuras de datos existentes pero dificulta la inclusión de nuevas estructuras de datos en funciones existentes__.
 En un sistema, en ocasiones necesitaremos la flexibilidad de añadir nuevos tipos de datos, por lo que preferimos objetos para esa parte del sistema. En otros casos, querremos añadir nuevos comportamientos, para lo que preferimos tipos de datos y procedimientos en esa parte del sistema. __Los buenos programadores de software entienden estos problemas sin prejuicios y eligen el enfoque más adecuado para cada tarea concreta__.
 
+## <span style="color: darkcyan">7. Procesar errores</span>
+
+Le parecerá extraño encontrar una sección de control de errores en un libro sobre código limpio. El control de errores es algo que todos tenemos que hacer al programar.
+Las entradas pueden ser incorrectas y los dispositivos pueden fallar, y cuando lo hacen, los programadores somos responsables de comprobar que el código hace lo que debe hacer.
+No obstante, la conexión con el código limpio debe ser evidente. Muchas bases de código están totalmente dominadas por el control de errores. Cuando digo que están dominadas, no quiero decir que únicamente realicen control de código, sino que es prácticamente imposible ver lo que el código hace debido a todo ese control de errores. __El control de errores es importante, pero si oscurece la lógica, es incorrecto__.
+__En este capítulo detallaremos diversas técnicas y consideraciones que puede usar para crear código limpio y robusto, código que procese los errores con elegancia y estilo__.

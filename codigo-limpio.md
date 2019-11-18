@@ -2836,3 +2836,53 @@ __Listado 7.2.__ DeviceController.java (con excepciones).
 
 Comprobará que es mucho más limpio. No es cuestión de estética. El código es mejor porque se solventan dos preocupaciones: el algoritmo para apagar el dispositivo y el control de errores ahora se encuentran por separados. Puede ver cada uno de ellos y entenderlos de forma independiente.
 
+### Crear primero la instrucción try-catch-finally
+
+Uno de los aspecto más interesantes de las excepciones es que definen un ámbito en el programa. Al ejecutar código en la parte del `try` de una instrucción `try-catch-finally`, indicamos que la ejecución se puede cancelar en cualquier momento y después retomar en `catch`.
+Veamos un ejemplo. Imagine que tiene que crear un código que acceda a un archivo y lea objetos serializados.
+Comenzamos con una prueba de unidad que muestra que obtendremos una excepción cuando el archivo no exista:
+
+```java
+    @Test(excepted = StorageException.class)
+    public void retrieveSectionShouldThrowOnInvalidFileName() {
+        sectionStore.retrieveSection("invalid - file");
+    }
+```
+
+La prueba nos lleva a crear lo siguiente:
+
+```java
+    public List<RecordedGrip> retrieveSelection(String sectionName) {
+        //se devuelve un resultado ficticio hasta tener una implementación real
+        return new ArrayList<RecordedGrip>();
+    }
+```
+
+Nuestra prueba falla ya que no genera una excepción. Tras ello, cambiamos la implementación para que intente acceder a un archivo no válido. Esta operación genera una excepción:
+
+```java
+    public List<RecordedGrip> retrieveSection(String sectionName) {
+        try {
+            FileInputStream stream = new FileInputStream(sectionName);
+        } catch (Exception e) {
+            throw new StorageException("retrieval error", e);
+        }
+        return new ArrayList<RecordedGrip>();
+    }
+```
+
+Ahora la prueba es correcta ya que capturamos la excepción y ya podemos refactorizar. Podemos reducir el tipo de la excepción capturada para que coincida con el tipo generado desde el constructor `FileInputStream: FileNotFoundException`:
+
+```java
+    public List<RecordedGrip> retrieveSection(String sectionName) {
+        try {
+            FileInputStream stream = new FileInputStream(sectionName);
+        } catch (FileNotFoundException e) {
+            throw new StorageException("retrieval error", e);
+        }
+        return new ArrayList<RecordedGrip>();
+    }
+```
+
+__Ahora que hemos definido el ámbito con una estructura__ `try-catch`, __podemos usar TDD para diseñar el resto de la lógica necesaria. Dicha lógica se añade entre la creación de__ `FileInputStream` __y el cierre, y podemos pretender que no pasa nada incorrecto__.
+__Intente crear pruebas que fuercen las excepciones, para después añadir al controlador un comportamiento que satisfaga dichas pruebas__. De este modo primero creará el ámbito de transacción del bloque `try` y podrá mantener la naturaleza de transacción del ámbito.

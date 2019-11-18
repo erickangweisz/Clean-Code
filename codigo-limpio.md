@@ -2067,7 +2067,7 @@ __En casos excepcionales, una variable puede declararse en la parte superior de 
 
 ### Variables de instancia
 
-__Las variables de instancia, por su parte, deben declararse en la parte superior de la clase__. Esto no debe aumentar la distancia vertical de las variables, ya que en una clase bien diseñada se usan en muchos sino en todos sus m��todos.
+__Las variables de instancia, por su parte, deben declararse en la parte superior de la clase__. Esto no debe aumentar la distancia vertical de las variables, ya que en una clase bien diseñada se usan en muchos sino en todos sus m����todos.
 Existen discrepancias sobre la ubicación de las variables de instancia. En C++ suele aplicarse la denominada regla de las tijeras, que sitúa todas las variables de instancia en un punto conocido para que todo el mundo sepa dónde buscarlas.
 Fíjese en el extraño caso de la clase `TestSuite` de JUnit 4.3.1. He atentado considerablemente esta clase para ilustrar este concepto. Si se fija en la mitad del listado, verás dos variables de instancia declaradas. Resultaría complicado ocultarlas en un punto mejor. Cualquiera que lea este código tendría que toparse con las declaraciones por casualidad (como me pasó a mí)
 
@@ -2768,3 +2768,71 @@ Le parecerá extraño encontrar una sección de control de errores en un libro s
 Las entradas pueden ser incorrectas y los dispositivos pueden fallar, y cuando lo hacen, los programadores somos responsables de comprobar que el código hace lo que debe hacer.
 No obstante, la conexión con el código limpio debe ser evidente. Muchas bases de código están totalmente dominadas por el control de errores. Cuando digo que están dominadas, no quiero decir que únicamente realicen control de código, sino que es prácticamente imposible ver lo que el código hace debido a todo ese control de errores. __El control de errores es importante, pero si oscurece la lógica, es incorrecto__.
 __En este capítulo detallaremos diversas técnicas y consideraciones que puede usar para crear código limpio y robusto, código que procese los errores con elegancia y estilo__.
+
+### Usar excepciones en lugar de códigos devueltos
+
+En el pasado, muchos lenguajes carecían de excepciones. Las técnicas para procesar e informar de errores eran limitadas. Se definía un indicador de error o se devolvía un código de error que el invocador podía comprobar. El código del __listado 7.1__ ilustra estos enfoques.
+
+__Listado 7.1.__ DeviceController.java.
+
+```java
+    public class DeviceController {
+        ...
+        public void sendShutDown() {
+            DeviceHandle handle = getHandle(DEV1);
+            // Comprobar el estado del dispositivo
+            if (handle != DeviceHandler.INVALID) {
+                // Guardar el estado del dispositivo en el campo de registro
+                retrieveDeviceRecord(handle);
+                // Si no está suspendido, cerrarlo
+                if (record.getStatus() != DEVICE_SUSPENDED) {
+                    pauseDevice(handle);
+                    clearDeviceWorkQueue(handle);
+                    closeDevice(handle);
+                } else {
+                    logger.log("Device suspended. Unable to shut down");
+                }
+            } else {
+                logger.log("Invalid handle for: " + DEV1.toString());
+            }
+        }
+        ...
+    }
+```
+
+El problema de estos enfoques es que confunden al invocador. El invocador debe comprobar inmediatamente los errores después de la invocación. Desafortunadamente, es algo que se suele olvidar. Por ello, es más recomendable generar una excepción al detectar un error. El código de invocación es más limpio. Su lógica no se oscurece por el control de errores.
+El __listado 7.2.__ muestra el código tras generar una excepciΰon en los métodos que pueden detectar errores.
+
+__Listado 7.2.__ DeviceController.java (con excepciones).
+```java
+    public class DeviceController {
+        ...
+
+        public void sendShutDown() {
+            try {
+                tryToShutDown();
+            } catch (DeviceShutDownError e) {
+                logger.log(e)
+            }
+        }
+    }
+
+    private void tryToShutDown() throws DeviceShutDownError {
+        DeviceHandle handle = getHandle(DEV1);
+        DeviceRecord record = retrieveDeviceRecord(handle);
+
+        pauseDevice(handle);
+        clearDeviceWorkQueue(handle);
+        closeDevice(handle);
+    }
+
+    private DeviceHandle getHandle(DeviceID id) {
+        ...
+        throw new DeviceShutDownError("Invalid handle for: " + id.toString());
+        ... 
+    }
+    ...
+```
+
+Comprobará que es mucho más limpio. No es cuestión de estética. El código es mejor porque se solventan dos preocupaciones: el algoritmo para apagar el dispositivo y el control de errores ahora se encuentran por separados. Puede ver cada uno de ellos y entenderlos de forma independiente.
+
